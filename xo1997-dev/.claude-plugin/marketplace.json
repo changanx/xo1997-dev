@@ -1,0 +1,20 @@
+{
+  "name": "xo1997-dev-marketplace",
+  "description": "Development marketplace for xo1997-dev core skills library",
+  "owner": {
+    "name": "xo1997",
+    "email": "xo1997@example.com"
+  },
+  "plugins": [
+    {
+      "name": "xo1997-dev",
+      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "xo1997",
+        "email": "xo1997@example.com"
+      }
+    }
+  ]
+}

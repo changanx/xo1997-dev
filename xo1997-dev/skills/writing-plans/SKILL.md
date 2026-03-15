@@ -234,6 +234,37 @@ git commit -m "feat(user): add user creation feature"
 - create_time 建立索引，支持时间范围查询
 ```
 
+## Audit Fields Verification (MANDATORY for Spring Boot Projects)
+
+**Before finalizing any Entity class, you MUST verify it includes audit fields:**
+
+| Field | Type | Annotation | Description |
+|-------|------|------------|-------------|
+| `id` | Long | `@TableId(type = IdType.AUTO)` | Primary key |
+| `createBy` | String | `@TableField(fill = FieldFill.INSERT)` | Creator |
+| `createTime` | LocalDateTime | `@TableField(fill = FieldFill.INSERT)` | Creation time |
+| `updateBy` | String | `@TableField(fill = FieldFill.INSERT_UPDATE)` | Updater |
+| `updateTime` | LocalDateTime | `@TableField(fill = FieldFill.INSERT_UPDATE)` | Update time |
+| `isDel` | Integer | `@TableLogic` | Logical delete flag |
+
+**Verification Checklist:**
+
+When writing Entity class in the plan, add a verification step:
+
+```markdown
+- [ ] **Verify audit fields in Entity**
+
+Check that Entity includes:
+- [ ] `@TableName("t_xxx")` annotation
+- [ ] `@TableId(type = IdType.AUTO)` for id field
+- [ ] `@TableField(fill = FieldFill.INSERT)` for createBy, createTime
+- [ ] `@TableField(fill = FieldFill.INSERT_UPDATE)` for updateBy, updateTime
+- [ ] `@TableLogic` for isDel field
+```
+
+**If Entity does NOT need audit fields**, document the reason in the plan:
+> Note: This entity does not include standard audit fields because [reason]
+
 ## Remember
 - Exact file paths always
 - Complete code in plan (not "add validation")

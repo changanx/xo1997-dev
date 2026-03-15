@@ -26,10 +26,29 @@ You MUST create a task for each of these items and complete them in order:
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Propose 2-3 approaches** — with trade-offs and your recommendation
 5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Write design doc** — save to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md` and commit
-7. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
-8. **User reviews written spec** — ask user to review the spec file before proceeding
-9. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+6. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
+7. **Write design doc** — save to `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md` and commit
+8. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
+9. **User reviews written spec** — ask user to review the spec file before proceeding
+10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+
+### Database Schema Design Checklist (Spring Boot Projects)
+
+When designing database schema, you MUST verify each table includes:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | BIGINT | ✅ | Primary key, auto increment |
+| `create_by` | VARCHAR(30) | - | Creator |
+| `create_time` | DATETIME | ✅ | Creation time, default CURRENT_TIMESTAMP |
+| `update_by` | VARCHAR(30) | - | Updater |
+| `update_time` | DATETIME | ✅ | Update time, default CURRENT_TIMESTAMP |
+| `is_del` | TINYINT(1) | ✅ | Logical delete (0: not deleted, 1: deleted) |
+
+**Before finalizing design, ask:**
+> "Does this table need the standard audit fields (create_by, create_time, update_by, update_time, is_del)?"
+
+If the user says no, confirm the reason and document it.
 
 ## Process Flow
 
@@ -120,9 +139,16 @@ digraph brainstorming {
 
 **Documentation:**
 
-- Write the validated design (spec) to `docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md`
+- Write the validated design (spec) to `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md`
   - (User preferences for spec location override this default)
-- Use elements-of-style:writing-clearly-and-concisely skill if available
+- **Use the design document template:** `docs/templates/design-document-template.md`
+- The template includes:
+  - Overview (goal, background, scope)
+  - Architecture design (components, data flow)
+  - Detailed design (API, data model, database schema)
+  - Error handling
+  - Test strategy
+  - Implementation notes
 - Commit the design document to git
 
 **Spec Review Loop:**

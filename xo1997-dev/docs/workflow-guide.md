@@ -714,6 +714,55 @@ BEFORE 声称任何状态:
 
 ---
 
+#### committing-changes - 提交代码变更
+
+| 属性 | 值 |
+|------|-----|
+| **触发条件** | 创建 git commit 时 |
+| **调用时机** | TDD GREEN 阶段完成后、每个任务完成后 |
+
+**格式：Conventional Commits**
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+**Type 类型：**
+| Type | 用途 |
+|------|------|
+| `feat` | 新功能 |
+| `fix` | Bug 修复 |
+| `docs` | 文档变更 |
+| `style` | 代码格式（不影响逻辑） |
+| `refactor` | 重构（不是新功能也不是修复） |
+| `perf` | 性能优化 |
+| `test` | 测试相关 |
+| `build` | 构建系统 |
+| `ci` | CI/CD 配置 |
+| `chore` | 其他杂项 |
+| `revert` | 回滚提交 |
+
+**核心规则：**
+- 关联单号由用户提供，放在最前面
+- 描述使用中文
+- 不加句号结尾
+- 控制在 50 字以内
+- 每次提交应是一个逻辑变更
+
+**示例：**
+```
+关联单号：REQ-123 feat(user): 添加密码重置功能
+
+关联单号：BUG-456 fix(auth): 修复 token 刷新竞态条件
+
+关联单号：TASK-789 refactor(video): 提取缩略图生成逻辑到独立服务
+```
+
+---
+
 ### 4.4 Spring Boot 专属技能
 
 #### springboot-best-practices
@@ -997,6 +1046,7 @@ xo1997-dev/
 │   ├── receiving-code-review/
 │   ├── finishing-a-development-branch/
 │   ├── using-git-worktrees/
+│   ├── committing-changes/        # 提交代码变更
 │   └── dispatching-parallel-agents/
 ├── GEMINI.md                    # Gemini CLI 兼容配置
 ├── README.md                    # 插件说明
@@ -1015,6 +1065,7 @@ xo1997-dev 提供了一套完整的软件工程实践工作流：
 | **系统化调试** | systematic-debugging 的四阶段流程 |
 | **证据驱动** | verification-before-completion 的铁律 |
 | **代码质量** | 双阶段审查（规范 + 质量）|
+| **提交规范** | committing-changes 的 Conventional Commits 格式 |
 | **隔离开发** | using-git-worktrees 的隔离工作空间 |
 | **前后端协同** | team-driven-development 的多代理协调 |
 | **Spring Boot 适配** | 审计字段检查、Maven 命令、分层架构审查 |

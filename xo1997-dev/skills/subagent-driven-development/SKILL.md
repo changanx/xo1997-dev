@@ -272,6 +272,7 @@ Done!
 
 **Subagents should use:**
 - **xo1997-dev:test-driven-development** - Subagents follow TDD for each task
+- **xo1997-dev:committing-changes** - Subagents use conventional commit format
 
 **Alternative workflow:**
 - **xo1997-dev:executing-plans** - Use for parallel session instead of same-session execution

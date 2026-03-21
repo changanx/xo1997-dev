@@ -216,6 +216,14 @@ After green only:
 
 Keep tests green. Don't add behavior.
 
+### Commit
+
+After REFACTOR, commit your changes:
+
+**REQUIRED SUB-SKILL:** Use xo1997-dev:committing-changes
+
+Follow that skill to write conventional commit messages.
+
 ### Repeat
 
 Next failing test for next feature.

@@ -16,18 +16,30 @@ xo1997-dev 是一套完整的软件开发工作流，专为 **Spring Boot + Vue3
 ## 工作原理
 
 ```
-用户需求 → brainstorming (需求探索) → writing-plans (实现计划) → 执行模式选择
-                                                                              │
-                      ┌───────────────────────────────────────────────────────┤
-                      │                                                       │
-                      ▼                                                       ▼
-              subagent-driven-development                          team-driven-development
-              (单域执行：仅前端或仅后端)                            (前后端并行开发)
-                      │                                                       │
-                      └───────────────────────────────────────────────────────┤
-                                                                              │
-                                                                              ▼
-                                                              TDD 实现 → 双阶段审查 → 验证 → 完成
+用户需求 → using-xo1997-dev (技能入口) → brainstorming (需求探索)
+                                                │
+                            ┌───────────────────┴───────────────────┐
+                            │                                       │
+                            ▼                                       ▼
+                    using-git-worktrees                   (optional 直接到 plans)
+                    (创建隔离工作空间)
+                            │
+                            ▼
+                    writing-plans (实现计划)
+                            │
+                            ▼
+                    执行模式选择
+                            │
+        ┌───────────────────┴───────────────────┐
+        │                                       │
+        ▼                                       ▼
+subagent-driven-development          team-driven-development
+(单域执行：仅前端或仅后端)            (前后端并行开发)
+        │                                       │
+        └───────────────────┬───────────────────┘
+                            │
+                            ▼
+            TDD 实现 → 双阶段审查 → verification → 完成
 ```
 
 ### 自动触发机制
@@ -218,6 +230,7 @@ REFACTOR: 重构 → 提交
 | **receiving-code-review** | 接收审查反馈 |
 | **using-git-worktrees** | Git Worktree 管理 |
 | **finishing-a-development-branch** | 完成开发分支 |
+| **committing-changes** | 提交代码变更 (Conventional Commits) |
 | **dispatching-parallel-agents** | 并行代理调度 |
 
 ### Spring Boot 专属技能
@@ -331,7 +344,7 @@ src/
 启动新会话，尝试触发技能：
 
 ```
-"帮我开发一个用户管理功能"  → brainstorming → writing-plans → ...
+"帮我开发一个用户管理功能"  → using-xo1997-dev → brainstorming → using-git-worktrees → writing-plans → ...
 "修复这个 bug"             → systematic-debugging
 "我完成了任务"             → verification-before-completion
 ```

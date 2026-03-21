@@ -199,10 +199,13 @@ Expected: PASS
 
 - [ ] **Step 5: Commit**
 
+**REQUIRED SUB-SKILL:** Use xo1997-dev:committing-changes
+
+Stage and commit with conventional message (ask user for issue ID):
 ```bash
 git add src/main/java/com/example/module/user/
 git add src/test/java/com/example/module/user/
-git commit -m "feat(user): add user creation feature"
+git commit -m "关联单号：<用户提供> feat(user): 添加用户创建功能"
 ```
 ````
 

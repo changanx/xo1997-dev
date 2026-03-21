@@ -198,3 +198,4 @@ git worktree remove <worktree-path>
 
 **Pairs with:**
 - **using-git-worktrees** - Cleans up worktree created by that skill
+- **committing-changes** - PR title follows conventional commit format (e.g., "feat(user): add profile management")

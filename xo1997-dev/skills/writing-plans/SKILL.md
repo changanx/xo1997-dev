@@ -15,7 +15,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Context:** This should be run in a dedicated worktree (created by brainstorming skill).
 
-**Save plans to:** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
+**Save plans to:** `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
 - (User preferences for plan location override this default)
 
 ## Scope Check
@@ -29,7 +29,7 @@ If the spec covers multiple independent subsystems, it should have been broken i
 1. **Discussion Phase (Brainstorming):** Discuss and design database schema during brainstorming
 2. **Confirmation Phase (Writing Plans):** Finalize and confirm schema design in the plan
 
-**Schema design document location:** `docs/database/表结构设计.md`
+**Schema design document location:** `docs/specs/feature_{模块}_{功能}_{日期}/database.md`
 
 **Schema optimization:** Continuous optimization during development, considering performance issues
 
@@ -211,7 +211,7 @@ git commit -m "关联单号：<用户提供> feat(user): 添加用户创建功�
 
 ## Database Schema Design Template
 
-**Include in `docs/database/表结构设计.md`:**
+**Include in `docs/specs/feature_{模块}_{功能}_{日期}/database.md`:**
 
 ```markdown
 ## 用户表 (t_user)
@@ -300,7 +300,7 @@ After completing each chunk of the plan:
 
 After saving the plan:
 
-**"Plan complete and saved to `docs/superpowers/plans/<filename>.md`. Ready to execute?"**
+**"Plan complete and saved to `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`. Ready to execute?"**
 
 ### Execution Mode Selection
 

@@ -22,15 +22,17 @@ Every project goes through this process. A todo list, a single-function utility,
 You MUST create a task for each of these items and complete them in order:
 
 1. **Explore project context** — check files, docs, recent commits
+   - **Verify docs/modules consistency:** Before starting, run `git diff main -- docs/modules/` to confirm the `docs/modules/` directory on the current branch is consistent with `main`. If there are differences, alert the user — they must review and resolve before proceeding with brainstorming.
 2. **Offer visual companion** (if topic will involve visual questions) — this is its own message, not combined with a clarifying question. See the Visual Companion section below.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-4. **Propose 2-3 approaches** — with trade-offs and your recommendation
-5. **Present design** — in sections scaled to their complexity, get user approval after each section
-6. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
-7. **Write design doc** — save to `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md` and commit
-8. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
-9. **User reviews written spec** — ask user to review the spec file before proceeding
-10. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+4. **Write requirements doc** — save requirements summary to `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md` using `docs/templates/requirements-template.md` as reference; include business goals, user scenarios, core features, and acceptance criteria
+5. **Propose 2-3 approaches** — with trade-offs and your recommendation
+6. **Present design** — in sections scaled to their complexity, get user approval after each section
+7. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
+8. **Write design doc** — save to `docs/specs/feature_{模块}_{功能}_{日期}/design.md` and commit
+9. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
+10. **User reviews written spec** — ask user to review the spec file before proceeding
+11. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ### Database Schema Design Checklist (Spring Boot Projects)
 
@@ -58,6 +60,7 @@ digraph brainstorming {
     "Visual questions ahead?" [shape=diamond];
     "Offer Visual Companion\n(own message, no other content)" [shape=box];
     "Ask clarifying questions" [shape=box];
+    "Write requirements doc" [shape=box];
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
@@ -71,7 +74,8 @@ digraph brainstorming {
     "Visual questions ahead?" -> "Offer Visual Companion\n(own message, no other content)" [label="yes"];
     "Visual questions ahead?" -> "Ask clarifying questions" [label="no"];
     "Offer Visual Companion\n(own message, no other content)" -> "Ask clarifying questions";
-    "Ask clarifying questions" -> "Propose 2-3 approaches";
+    "Ask clarifying questions" -> "Write requirements doc";
+    "Write requirements doc" -> "Propose 2-3 approaches";
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
@@ -119,7 +123,7 @@ digraph brainstorming {
   - Index design for query optimization
   - Relationships between tables (foreign keys, associations)
   - Unified audit fields: `create_by`, `create_time`, `update_by`, `update_time`, `is_del`
-- Document the schema design in `docs/database/表结构设计.md` during writing-plans phase
+- Document the schema design in `docs/specs/feature_{模块}_{功能}_{日期}/database.md` during writing-plans phase
 - Schema optimization continues during development with performance considerations
 
 **Design for isolation and clarity:**
@@ -139,7 +143,10 @@ digraph brainstorming {
 
 **Documentation:**
 
-- Write the validated design (spec) to `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md`
+- **Requirements doc:** Summarize requirements from the clarifying dialogue to `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md`
+  - Use `docs/templates/requirements-template.md` as reference
+  - Include: business goals, user scenarios, core features, acceptance criteria
+- **Design doc:** Write the validated design (spec) to `docs/specs/feature_{模块}_{功能}_{日期}/design.md`
   - (User preferences for spec location override this default)
 - **Use the design document template:** `docs/templates/design-document-template.md`
 - The template includes:
@@ -149,7 +156,7 @@ digraph brainstorming {
   - Error handling
   - Test strategy
   - Implementation notes
-- Commit the design document to git
+- Commit both documents to git
 
 **Spec Review Loop:**
 After writing the spec document:

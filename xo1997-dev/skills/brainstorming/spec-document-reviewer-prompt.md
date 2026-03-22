@@ -4,7 +4,7 @@ Use this template when dispatching a spec document reviewer subagent.
 
 **Purpose:** Verify the spec is complete, consistent, and ready for implementation planning.
 
-**Dispatch after:** Spec document is written to docs/xo1997-dev/specs/
+**Dispatch after:** Spec document is written to docs/specs/feature_{模块}_{功能}_{日期}/design.md
 
 ```
 Task tool (general-purpose):

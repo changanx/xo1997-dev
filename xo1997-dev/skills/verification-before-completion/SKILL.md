@@ -145,6 +145,19 @@ From 24 failure memories:
 - Moving to next task
 - Delegating to agents
 
+**After verification passes, update module documentation:**
+
+When verification is complete and the work is ready for commit/PR:
+1. Read the design doc at `docs/specs/feature_{模块}_{功能}_{日期}/design.md`
+2. Update the corresponding module doc `docs/modules/{模块}.md`:
+   - Add new functionality to 核心功能
+   - Add new files to 代码结构
+   - Add new APIs to API 接口
+   - Add new entities to 数据模型
+   - Update 依赖 if needed
+   - Update 配置说明 if needed
+3. Commit the updated module doc along with the feature changes
+
 **Rule applies to:**
 - Exact phrases
 - Paraphrases and synonyms

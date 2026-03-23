@@ -1,7 +1,7 @@
 # xo1997-dev 工作流程详解
 
-> 版本: 1.1.0
-> 更新时间: 2026-03-17
+> 版本: 1.2.0
+> 更新时间: 2026-03-23
 > 适用项目: Spring Boot 2.7.18 + MyBatis-Plus 3.5.7 后端 / Vue 3 + Vite + Element Plus 前端
 
 ---
@@ -69,15 +69,17 @@ xo1997-dev 是一套完整的软件工程实践工作流，核心理念：
 │                        │
 │  Checklist:           │
 │  1. 探索项目上下文     │
+│     • 检查 docs/modules/ 分支一致性 ✓ │
 │  2. 提供可视化伴侣     │ ← 如涉及视觉问题
 │  3. 提出澄清问题       │ ← 一次一个问题
-│  4. 提出 2-3 种方案    │
-│  5. 展示设计          │
-│  6. 数据库设计 ✓      │ ← Spring Boot 强制
-│  7. 编写设计文档       │
-│  8. 设计评审循环       │ ← spec-document-reviewer
-│  9. 用户审查          │
-│  10. 过渡到实现       │
+│  4. 编写需求文档       │ ← requirements.md
+│  5. 提出 2-3 种方案    │
+│  6. 展示设计          │
+│  7. 数据库设计 ✓      │ ← Spring Boot 强制
+│  8. 编写设计文档       │
+│  9. 设计评审循环       │ ← spec-document-reviewer
+│  10. 用户审查          │
+│  11. 过渡到实现       │
 └───────────┬───────────┘
             │ 设计批准
             ▼
@@ -202,6 +204,7 @@ xo1997-dev 是一套完整的软件工程实践工作流，核心理念：
 │  必须: 运行命令        │
 │  必须: 读取输出        │
 │  必须: 确认结果        │
+│  更新模块文档 ✓       │ ← docs/modules/{模块}.md
 └───────────┬───────────┘
             │ 验证通过
             ▼
@@ -471,16 +474,27 @@ Phase 6: 完成
 | **类型** | 刚性（HARD-GATE：必须先有批准的设计） |
 
 **Checklist:**
-1. 探索项目上下文
+1. 探索项目上下文（检查 `docs/modules/` 分支一致性）
 2. 提供可视化伴侣（如涉及视觉问题）
 3. 提出澄清问题（一次一个）
-4. 提出 2-3 种方案
-5. 展示设计（按复杂度调整详细程度）
-6. **数据库设计（Spring Boot 项目必填）**
-7. 编写设计文档 → `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md`
-8. 设计评审循环（spec-document-reviewer）
-9. 用户审查设计文档
-10. 过渡到实现（调用 writing-plans）
+4. **编写需求文档** → `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md`
+5. 提出 2-3 种方案
+6. 展示设计（按复杂度调整详细程度）
+7. **数据库设计（Spring Boot 项目必填）**
+8. 编写设计文档 → `docs/specs/feature_{模块}_{功能}_{日期}/design.md`
+9. 设计评审循环（spec-document-reviewer）
+10. 用户审查设计文档
+11. 过渡到实现（调用 writing-plans）
+
+**文档路径规范：**
+```
+docs/specs/feature_{模块}_{功能}_{日期}/
+├── requirements.md    # 需求文档
+├── design.md          # 设计文档
+├── plan.md            # 实现计划
+├── test-cases.md      # 测试用例
+└── test-report.md     # 测试报告
+```
 
 **终止状态：** 只能调用 `writing-plans`，不能直接调用其他实现技能。
 
@@ -634,6 +648,18 @@ BEFORE 声称任何状态:
 | 编译检查 | `mvn clean compile` | `npm run build` |
 | 单个测试 | `mvn test -Dtest=ClassName` | `npm run test -- --grep "test name"` |
 
+**模块文档更新:**
+```
+验证通过后，更新 docs/modules/{模块}.md：
+1. 读取设计文档 docs/specs/feature_{模块}_{功能}_{日期}/design.md
+2. 更新对应模块文档：
+   - 新增功能 → 核心功能
+   - 新增文件 → 代码结构
+   - 新增 API → API 接口
+   - 新增实体 → 数据模型
+3. 与功能代码一起提交
+```
+
 ---
 
 ### 4.3 协作技能
@@ -663,6 +689,40 @@ BEFORE 声称任何状态:
 - 技术严谨性，不是表演性同意
 - 验证优先，不盲目实施
 - 有疑问时提出讨论
+
+---
+
+#### for-test - 测试人员工作流
+
+| 属性 | 值 |
+|------|-----|
+| **触发条件** | 设计文档批准后需要细化测试用例、开发提测需要执行验收、功能上线需要出具测试报告 |
+| **调用时机** | 设计阶段、实现阶段、完成阶段 |
+
+**测试人员职责：**
+
+| 阶段 | 职责 | 输出 |
+|------|------|------|
+| 设计阶段 | 参与需求评审，确认验收标准 | 验收标准确认 |
+| 实现阶段 | 补充完整测试用例 | test-cases.md |
+| 实现阶段 | 执行测试，记录缺陷 | 缺陷报告 |
+| 完成阶段 | 出具测试报告 | test-report.md |
+
+**流程：**
+```
+Phase 1: 测试用例设计
+输入: design.md, plan.md
+输出: test-cases.md
+
+Phase 2: 测试用例评审
+参与方: 测试负责人、开发负责人、产品
+
+Phase 3: 测试执行
+顺序: 冒烟 → 功能 → 边界 → 异常 → 回归
+
+Phase 4: 测试报告
+输出: test-report.md（含测试签名）
+```
 
 ---
 
@@ -1028,6 +1088,10 @@ xo1997-dev/
 │   ├── brainstorming-design-process.md
 │   ├── writing-plans-process.md
 │   └── templates/
+│       ├── design-document-template.md   # 设计文档模板
+│       ├── requirements-template.md      # 需求文档模板
+│       ├── test-case-template.md         # 测试用例模板
+│       └── module-template.md            # 模块文档模板
 ├── hooks/
 │   ├── hooks.json               # 钩子配置
 │   ├── session-start            # 会话启动钩子
@@ -1047,6 +1111,7 @@ xo1997-dev/
 │   ├── finishing-a-development-branch/
 │   ├── using-git-worktrees/
 │   ├── committing-changes/        # 提交代码变更
+│   ├── for-test/                  # 测试人员工作流
 │   └── dispatching-parallel-agents/
 ├── GEMINI.md                    # Gemini CLI 兼容配置
 ├── README.md                    # 插件说明
@@ -1068,6 +1133,8 @@ xo1997-dev 提供了一套完整的软件工程实践工作流：
 | **提交规范** | committing-changes 的 Conventional Commits 格式 |
 | **隔离开发** | using-git-worktrees 的隔离工作空间 |
 | **前后端协同** | team-driven-development 的多代理协调 |
+| **测试左移** | for-test 技能支持测试人员全程参与 |
+| **文档规范** | 需求文档、设计文档、测试用例、模块文档模板 |
 | **Spring Boot 适配** | 审计字段检查、Maven 命令、分层架构审查 |
 | **Vue3 适配** | Composition API、Pinia 状态管理、Vitest 测试 |
 

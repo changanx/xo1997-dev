@@ -9,6 +9,35 @@ description: Use when implementation plan involves both frontend and backend wor
 
 Execute implementation plans that involve both frontend and backend development using an Agent Team collaboration model. Multiple specialized agents work in parallel, coordinated by a team-coordinator agent.
 
+## Document Verification Gate
+
+<VERIFICATION-GATE>
+Every document output step MUST be followed by existence verification. This is NON-NEGOTIABLE.
+
+**Verification Protocol:**
+```
+After claiming to create/write/save a document:
+1. STOP - Do not proceed to next step
+2. Use Read tool to check file exists at the claimed path
+3. If file does NOT exist:
+   - STOP immediately
+   - Create the document NOW
+   - Re-verify existence
+   - Do NOT skip to next step
+4. If file EXISTS:
+   - Confirm to user: "✅ Document saved: {path}"
+   - Only then proceed to next step
+```
+
+**Documents to verify in this skill:**
+- `.claude/team-session/design-doc.md` — Design document
+- `.claude/team-session/plan.md` — Implementation plan
+- `.claude/team-session/frontend-tasks.md` — Frontend task status
+- `.claude/team-session/backend-tasks.md` — Backend task status
+- `.claude/team-session/api-changes.md` — API change log
+- `.claude/team-session/blockers.md` — Blocker issues
+</VERIFICATION-GATE>
+
 ## When to Use
 
 ```dot
@@ -95,6 +124,11 @@ Create communication directory and files:
 mkdir -p .claude/team-session/review-feedback
 touch .claude/team-session/{frontend-tasks.md,backend-tasks.md,api-changes.md,blockers.md}
 ```
+
+**✅ VERIFY communication files exist:**
+- Use Read tool to check each file exists
+- If any missing, create it NOW before proceeding
+- Confirm: "✅ Team session initialized with all communication files"
 
 ### Step 2: Dispatch team-coordinator
 

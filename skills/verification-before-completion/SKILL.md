@@ -156,7 +156,10 @@ When verification is complete and the work is ready for commit/PR:
    - Add new entities to 数据模型
    - Update 依赖 if needed
    - Update 配置说明 if needed
-3. Commit the updated module doc along with the feature changes
+3. **✅ VERIFY module doc updated:**
+   - Use Read tool to check `docs/modules/{模块}.md` contains the new content
+   - If missing updates, update it NOW
+4. Commit the updated module doc along with the feature changes
 
 **Rule applies to:**
 - Exact phrases

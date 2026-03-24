@@ -17,6 +17,29 @@ Do NOT invoke any implementation skill, write any code, scaffold any project, or
 
 Every project goes through this process. A todo list, a single-function utility, a config change — all of them. "Simple" projects are where unexamined assumptions cause the most wasted work. The design can be short (a few sentences for truly simple projects), but you MUST present it and get approval.
 
+## Document Verification Gate
+
+<VERIFICATION-GATE>
+Every document output step MUST be followed by existence verification. This is NON-NEGOTIABLE.
+
+**Verification Protocol:**
+```
+After claiming to create/write/save a document:
+1. STOP - Do not proceed to next step
+2. Use Read tool to check file exists at the claimed path
+3. If file does NOT exist:
+   - STOP immediately
+   - Create the document NOW
+   - Re-verify existence
+   - Do NOT skip to next step
+4. If file EXISTS:
+   - Confirm to user: "✅ Document saved: {path}"
+   - Only then proceed to next step
+```
+
+**Why this matters:** AI often claims to have created documents without actually writing them. This gate catches that failure before it propagates.
+</VERIFICATION-GATE>
+
 ## Checklist
 
 You MUST create a task for each of these items and complete them in order:
@@ -26,13 +49,15 @@ You MUST create a task for each of these items and complete them in order:
 2. **Offer visual companion** (if topic will involve visual questions) — this is its own message, not combined with a clarifying question. See the Visual Companion section below.
 3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 4. **Write requirements doc** — save requirements summary to `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md` using `docs/templates/requirements-template.md` as reference; include business goals, user scenarios, core features, and acceptance criteria
-5. **Propose 2-3 approaches** — with trade-offs and your recommendation
-6. **Present design** — in sections scaled to their complexity, get user approval after each section
-7. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
-8. **Write design doc** — save to `docs/specs/feature_{模块}_{功能}_{日期}/design.md` and commit
-9. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
-10. **User reviews written spec** — ask user to review the spec file before proceeding
-11. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+5. **✅ VERIFY requirements doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
+6. **Propose 2-3 approaches** — with trade-offs and your recommendation
+7. **Present design** — in sections scaled to their complexity, get user approval after each section
+8. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
+9. **Write design doc** — save to `docs/specs/feature_{模块}_{功能}_{日期}/design.md` and commit
+10. **✅ VERIFY design doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
+11. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
+12. **User reviews written spec** — ask user to review the spec file before proceeding
+13. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ### Database Schema Design Checklist (Spring Boot Projects)
 
@@ -61,10 +86,15 @@ digraph brainstorming {
     "Offer Visual Companion\n(own message, no other content)" [shape=box];
     "Ask clarifying questions" [shape=box];
     "Write requirements doc" [shape=box];
+    "VERIFY requirements doc" [shape=box style=filled fillcolor=yellow];
+    "File exists?" [shape=diamond];
+    "Create document NOW" [shape=box style=filled fillcolor=red];
     "Propose 2-3 approaches" [shape=box];
     "Present design sections" [shape=box];
     "User approves design?" [shape=diamond];
     "Write design doc" [shape=box];
+    "VERIFY design doc" [shape=box style=filled fillcolor=yellow];
+    "File exists?" [shape=diamond];
     "Spec review loop" [shape=box];
     "Spec review passed?" [shape=diamond];
     "User reviews spec?" [shape=diamond];
@@ -75,12 +105,19 @@ digraph brainstorming {
     "Visual questions ahead?" -> "Ask clarifying questions" [label="no"];
     "Offer Visual Companion\n(own message, no other content)" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Write requirements doc";
-    "Write requirements doc" -> "Propose 2-3 approaches";
+    "Write requirements doc" -> "VERIFY requirements doc";
+    "VERIFY requirements doc" -> "File exists?";
+    "File exists?" -> "Create document NOW" [label="NO"];
+    "Create document NOW" -> "VERIFY requirements doc";
+    "File exists?" -> "Propose 2-3 approaches" [label="YES"];
     "Propose 2-3 approaches" -> "Present design sections";
     "Present design sections" -> "User approves design?";
     "User approves design?" -> "Present design sections" [label="no, revise"];
     "User approves design?" -> "Write design doc" [label="yes"];
-    "Write design doc" -> "Spec review loop";
+    "Write design doc" -> "VERIFY design doc";
+    "VERIFY design doc" -> "File exists?";
+    "File exists?" -> "Create document NOW" [label="NO"];
+    "File exists?" -> "Spec review loop" [label="YES"];
     "Spec review loop" -> "Spec review passed?";
     "Spec review passed?" -> "Spec review loop" [label="issues found,\nfix and re-dispatch"];
     "Spec review passed?" -> "User reviews spec?" [label="approved"];

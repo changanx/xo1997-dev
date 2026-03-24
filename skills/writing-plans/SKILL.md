@@ -18,6 +18,31 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Save plans to:** `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
 - (User preferences for plan location override this default)
 
+## Document Verification Gate
+
+<VERIFICATION-GATE>
+Every document output step MUST be followed by existence verification. This is NON-NEGOTIABLE.
+
+**Verification Protocol:**
+```
+After claiming to create/write/save a document:
+1. STOP - Do not proceed to next step
+2. Use Read tool to check file exists at the claimed path
+3. If file does NOT exist:
+   - STOP immediately
+   - Create the document NOW
+   - Re-verify existence
+   - Do NOT skip to next step
+4. If file EXISTS:
+   - Confirm to user: "✅ Document saved: {path}"
+   - Only then proceed to next step
+```
+
+**Documents to verify in this skill:**
+- `docs/specs/feature_{模块}_{功能}_{日期}/plan.md` — Implementation plan
+- `docs/specs/feature_{模块}_{功能}_{日期}/database.md` — Database schema (if applicable)
+</VERIFICATION-GATE>
+
 ## Scope Check
 
 If the spec covers multiple independent subsystems, it should have been broken into sub-project specs during brainstorming. If it wasn't, suggest breaking this into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
@@ -295,6 +320,24 @@ After completing each chunk of the plan:
 - Same agent that wrote the plan fixes it (preserves context)
 - If loop exceeds 5 iterations, surface to human for guidance
 - Reviewers are advisory - explain disagreements if you believe feedback is incorrect
+
+## Document Verification (MANDATORY)
+
+Before proceeding to Execution Handoff, you MUST verify:
+
+1. **✅ VERIFY plan.md exists**
+   - Use Read tool to check `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
+   - If missing, create it NOW before proceeding
+
+2. **✅ VERIFY database.md exists** (if database schema was designed)
+   - Use Read tool to check `docs/specs/feature_{模块}_{功能}_{日期}/database.md`
+   - If missing, create it NOW before proceeding
+
+3. **Commit the plan**
+   - After verification, commit the plan document(s) to git
+
+**Only after all verifications pass:**
+- Confirm to user: "✅ Plan verified and saved to `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`"
 
 ## Execution Handoff
 

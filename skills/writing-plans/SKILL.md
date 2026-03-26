@@ -13,10 +13,20 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Context:** This should be run in a dedicated worktree (created by brainstorming skill).
-
 **Save plans to:** `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
 - (User preferences for plan location override this default)
+
+## Worktree Setup
+
+**REQUIRED:** Before writing the plan, ensure you are working in an isolated workspace.
+
+1. Check if already in a worktree: `git worktree list`
+2. If NOT in a worktree:
+   - **REQUIRED SUB-SKILL:** Use `xo1997-dev:using-git-worktrees` to create an isolated workspace
+   - Wait for worktree setup to complete before proceeding
+3. If already in a worktree: proceed with plan creation
+
+**Why this matters:** Plans should be written in isolation to prevent accidental commits to main/master branch.
 
 ## Document Verification Gate
 
@@ -51,8 +61,14 @@ If the spec covers multiple independent subsystems, it should have been broken i
 
 **Database schema design is done in two phases:**
 
-1. **Discussion Phase (Brainstorming):** Discuss and design database schema during brainstorming
-2. **Confirmation Phase (Writing Plans):** Finalize and confirm schema design in the plan
+1. **Discussion Phase (Brainstorming):** Discuss and design database schema during brainstorming, results saved in `design.md`
+2. **Confirmation Phase (Writing Plans):** Extract schema from `design.md` and create standalone `database.md`
+
+**Your task in this phase:**
+1. Read the database schema design from `docs/specs/feature_{模块}_{功能}_{日期}/design.md`
+2. Create `docs/specs/feature_{模块}_{功能}_{日期}/database.md` with the schema details
+3. Include: table definitions, indexes, relationships, and audit fields
+4. ✅ VERIFY `database.md` exists after creation
 
 **Schema design document location:** `docs/specs/feature_{模块}_{功能}_{日期}/database.md`
 
@@ -347,37 +363,37 @@ After saving the plan:
 
 ### Execution Mode Selection
 
-Choose the execution mode based on plan scope:
+After user confirms ready to execute, automatically select the execution mode based on plan scope and platform capability:
 
 ```dot
 digraph execution_mode {
-    "Plan saved" [shape=box];
+    "User confirms execution" [shape=box];
+    "Platform has subagents?" [shape=diamond];
     "Both frontend AND backend?" [shape=diamond];
-    "subagent-driven-development" [shape=box style=filled fillcolor=lightgreen];
     "team-driven-development" [shape=box style=filled fillcolor=lightblue];
+    "subagent-driven-development" [shape=box style=filled fillcolor=lightgreen];
+    "executing-plans" [shape=box style=filled fillcolor=lightyellow];
 
-    "Plan saved" -> "Both frontend AND backend?";
+    "User confirms execution" -> "Platform has subagents?";
+    "Platform has subagents?" -> "Both frontend AND backend?" [label="yes"];
+    "Platform has subagents?" -> "executing-plans" [label="no"];
     "Both frontend AND backend?" -> "team-driven-development" [label="yes"];
     "Both frontend AND backend?" -> "subagent-driven-development" [label="no - single focus"];
 }
 ```
 
-**Decision rules:**
-- **subagent-driven-development**: Single focus (frontend only OR backend only)
-  - Fresh subagent per task + two-stage review (spec compliance, then code quality)
-  - Works well for focused changes with clear boundaries
+**Decision rules (automatic, no user choice needed):**
+1. **Check platform capability:** Does the current platform support subagents?
+2. **Check plan scope:** Does the plan involve both frontend AND backend?
+
+**If platform has subagents:**
 - **team-driven-development**: Both frontend AND backend work required
   - Multi-agent coordination (team-coordinator, frontend-developer, backend-developer)
   - Parallel development with shared communication files
-  - Use when frontend and backend tasks have dependencies
+- **subagent-driven-development**: Single focus (frontend only OR backend only)
+  - Fresh subagent per task + two-stage review (spec compliance, then code quality)
 
-### Harness Capability Check
+**If platform does NOT have subagents:**
+- **executing-plans**: Execute plan in current session with checkpoints for review
 
-**If harness has subagents (Claude Code, etc.):**
-- Use the execution mode selected above (subagent-driven or team-driven)
-- Do NOT offer a choice - follow the decision rules
-- Both modes leverage subagents effectively
-
-**If harness does NOT have subagents:**
-- Execute plan in current session using executing-plans
-- Batch execution with checkpoints for review
+**After determining the mode, invoke the appropriate skill directly.** Do NOT ask user to choose.

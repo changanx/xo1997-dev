@@ -103,7 +103,7 @@ subagent-driven-development          team-driven-development
 - 包含：精确文件路径、完整代码、TDD 步骤
 - Spring Boot：强制审计字段验证
 
-**产出：** `docs/superpowers/plans/YYYY-MM-DD-<feature-name>.md`
+**产出：** `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
 
 ### 4. 执行模式选择
 

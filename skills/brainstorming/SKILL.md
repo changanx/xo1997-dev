@@ -160,7 +160,8 @@ digraph brainstorming {
   - Index design for query optimization
   - Relationships between tables (foreign keys, associations)
   - Unified audit fields: `create_by`, `create_time`, `update_by`, `update_time`, `is_del`
-- Document the schema design in `docs/specs/feature_{模块}_{功能}_{日期}/database.md` during writing-plans phase
+- Schema design is documented in `design.md` as part of the design document
+- During writing-plans phase, schema will be extracted to `database.md` for reference
 - Schema optimization continues during development with performance considerations
 
 **Design for isolation and clarity:**

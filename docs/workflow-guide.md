@@ -1113,7 +1113,6 @@ xo1997-dev/
 │   ├── committing-changes/        # 提交代码变更
 │   ├── for-test/                  # 测试人员工作流
 │   └── dispatching-parallel-agents/
-├── GEMINI.md                    # Gemini CLI 兼容配置
 ├── README.md                    # 插件说明
 └── xo1997-dev-customization.md  # 定制化文档
 ```

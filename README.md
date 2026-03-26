@@ -391,7 +391,6 @@ xo1997-dev/
 ├── docs/                        # 文档
 ├── hooks/                       # 钩子配置
 ├── skills/                      # 核心技能库
-├── GEMINI.md                    # Gemini CLI 兼容
 └── README.md
 ```
 

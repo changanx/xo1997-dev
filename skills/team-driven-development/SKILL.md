@@ -1,6 +1,6 @@
 ---
 name: team-driven-development
-description: Use when implementation plan involves both frontend and backend work. Coordinates multiple agents working in parallel with shared communication files.
+description: Use when implementation plan involves both frontend and backend work.
 ---
 
 # Team-Driven Development

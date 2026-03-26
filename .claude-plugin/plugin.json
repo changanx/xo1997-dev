@@ -6,6 +6,8 @@
     "name": "xo1997",
     "email": "xo1997@example.com"
   },
+  "homepage": "https://github.com/changanx/xo1997-dev",
+  "repository": "https://github.com/changanx/xo1997-dev",
   "license": "MIT",
   "keywords": ["skills", "tdd", "debugging", "collaboration", "best-practices", "workflows", "springboot", "java", "mybatis-plus"]
 }

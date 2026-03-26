@@ -1,6 +1,6 @@
 ---
 name: committing-changes
-description: Use when creating git commits - provides conventional commit message format, type definitions, scope rules, and Chinese description examples for consistent commit history
+description: Use when creating git commits.
 ---
 
 # Committing Changes

@@ -1113,6 +1113,11 @@ xo1997-dev/
 │   ├── committing-changes/        # 提交代码变更
 │   ├── for-test/                  # 测试人员工作流
 │   └── dispatching-parallel-agents/
+├── tests/
+│   ├── helpers/                   # 测试辅助函数
+│   ├── l1-triggering/             # L1 触发测试
+│   ├── l2-behavior/               # L2 行为测试
+│   └── l3-integration/            # L3 集成测试
 ├── README.md                    # 插件说明
 └── xo1997-dev-customization.md  # 定制化文档
 ```

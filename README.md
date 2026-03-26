@@ -18,28 +18,26 @@ xo1997-dev 是一套完整的软件开发工作流，专为 **Spring Boot + Vue3
 ```
 用户需求 → using-xo1997-dev (技能入口) → brainstorming (需求探索)
                                                 │
-                            ┌───────────────────┴───────────────────┐
-                            │                                       │
-                            ▼                                       ▼
-                    using-git-worktrees                   (optional 直接到 plans)
-                    (创建隔离工作空间)
-                            │
-                            ▼
-                    writing-plans (实现计划)
-                            │
-                            ▼
-                    执行模式选择
-                            │
-        ┌───────────────────┴───────────────────┐
-        │                                       │
-        ▼                                       ▼
-subagent-driven-development          team-driven-development
-(单域执行：仅前端或仅后端)            (前后端并行开发)
-        │                                       │
-        └───────────────────┬───────────────────┘
-                            │
-                            ▼
-            TDD 实现 → 双阶段审查 → verification → 完成
+                                                ▼
+                                        writing-plans (实现计划)
+                                        │
+                                        ├─ 创建 worktree (隔离工作空间)
+                                        ├─ 编写实现计划
+                                        └─ 自动选择执行模式
+                                                │
+                            ┌───────────────────┼───────────────────┐
+                            │                   │                   │
+                            ▼                   ▼                   ▼
+                    仅前端/后端           前端+后端            无子代理
+                            │                   │                   │
+                            ▼                   ▼                   ▼
+                subagent-driven      team-driven          executing-plans
+                development          development          (当前会话执行)
+                            │                   │
+                            └───────────────────┬───────────────────┘
+                                                │
+                                                ▼
+                                TDD 实现 → 双阶段审查 → verification → 完成
 ```
 
 ### 自动触发机制
@@ -83,20 +81,18 @@ subagent-driven-development          team-driven-development
     → 数据库设计 (Spring Boot) → 编写设计文档 → 设计评审循环 → 用户审查
 ```
 
-**产出：** `docs/xo1997-dev/specs/YYYY-MM-DD-<topic>-design.md`
+**产出：**
+- 需求文档: `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md`
+- 设计文档: `docs/specs/feature_{模块}_{功能}_{日期}/design.md`
 
-### 2. using-git-worktrees - 创建隔离工作空间
-
-**触发：** 设计批准后
-
-**作用：**
-- 创建隔离分支
-- 运行项目设置
-- 验证测试基线
-
-### 3. writing-plans - 编写实现计划
+### 2. writing-plans - 编写实现计划
 
 **触发：** 设计批准后
+
+**流程：**
+1. 创建 worktree 隔离工作空间
+2. 编写实现计划
+3. 自动选择执行模式
 
 **特点：**
 - 任务粒度：2-5 分钟每步
@@ -344,7 +340,7 @@ src/
 启动新会话，尝试触发技能：
 
 ```
-"帮我开发一个用户管理功能"  → using-xo1997-dev → brainstorming → using-git-worktrees → writing-plans → ...
+"帮我开发一个用户管理功能"  → using-xo1997-dev → brainstorming → writing-plans → 自动执行...
 "修复这个 bug"             → systematic-debugging
 "我完成了任务"             → verification-before-completion
 ```
@@ -391,6 +387,11 @@ xo1997-dev/
 ├── docs/                        # 文档
 ├── hooks/                       # 钩子配置
 ├── skills/                      # 核心技能库
+├── tests/                       # 测试框架
+│   ├── helpers/                 # 测试辅助函数
+│   ├── l1-triggering/           # L1 触发测试
+│   ├── l2-behavior/             # L2 行为测试
+│   └── l3-integration/          # L3 集成测试
 └── README.md
 ```
 

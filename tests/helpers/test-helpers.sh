@@ -59,6 +59,7 @@ run_claude_json() {
 
     timeout "$timeout" claude -p "$prompt" \
         --plugin-dir "$PLUGIN_ROOT" \
+        --verbose \
         --output-format stream-json \
         > "$output_file" 2>&1 || true
 
@@ -156,6 +157,21 @@ assert_order() {
     if [ "$line_a" -lt "$line_b" ]; then
         echo "  [PASS] $test_name (A at line $line_a, B at line $line_b)"
         return 0
+    elif [ "$line_a" -eq "$line_b" ]; then
+        # Same line - check character position
+        local match_a=$(echo "$output" | grep -in "$pattern_a" | head -1)
+        local match_b=$(echo "$output" | grep -in "$pattern_b" | head -1)
+        local pos_a=$(echo "$match_a" | grep -bio "$pattern_a" | head -1 | cut -d: -f1)
+        local pos_b=$(echo "$match_b" | grep -bio "$pattern_b" | head -1 | cut -d: -f1)
+        if [ -n "$pos_a" ] && [ -n "$pos_b" ] && [ "$pos_a" -lt "$pos_b" ]; then
+            echo "  [PASS] $test_name (same line $line_a, A at char $pos_a, B at char $pos_b)"
+            return 0
+        else
+            echo "  [FAIL] $test_name"
+            echo "  Expected '$pattern_a' before '$pattern_b' on same line"
+            echo "  But found A at char $pos_a, B at char $pos_b on line $line_a"
+            return 1
+        fi
     else
         echo "  [FAIL] $test_name"
         echo "  Expected '$pattern_a' before '$pattern_b'"

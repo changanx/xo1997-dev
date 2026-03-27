@@ -26,6 +26,7 @@ fi
 # Parse arguments
 VERBOSE=false
 TIMEOUT=300
+MAX_TURNS=5
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -37,12 +38,17 @@ while [[ $# -gt 0 ]]; do
             TIMEOUT="$2"
             shift 2
             ;;
+        --max-turns|-m)
+            MAX_TURNS="$2"
+            shift 2
+            ;;
         --help|-h)
             echo "Usage: $0 [options]"
             echo ""
             echo "Options:"
             echo "  --verbose, -v        Show verbose output"
             echo "  --timeout SECONDS    Set timeout per test (default: 300)"
+            echo "  --max-turns TURNS    Set max turns per test (default: 5)"
             echo "  --help, -h           Show this help"
             exit 0
             ;;
@@ -92,7 +98,7 @@ for skill in "${SKILLS[@]}"; do
     start_time=$(date +%s)
 
     if [ "$VERBOSE" = true ]; then
-        if timeout "$TIMEOUT" "${SCRIPT_DIR}/run-test.sh" "$skill"; then
+        if timeout "$TIMEOUT" "${SCRIPT_DIR}/run-test.sh" "$skill" "$MAX_TURNS"; then
             end_time=$(date +%s)
             duration=$((end_time - start_time))
             echo ""
@@ -112,7 +118,7 @@ for skill in "${SKILLS[@]}"; do
         fi
     else
         # Capture output for non-verbose mode
-        if output=$(timeout "$TIMEOUT" "${SCRIPT_DIR}/run-test.sh" "$skill" 2>&1); then
+        if output=$(timeout "$TIMEOUT" "${SCRIPT_DIR}/run-test.sh" "$skill" "$MAX_TURNS" 2>&1); then
             end_time=$(date +%s)
             duration=$((end_time - start_time))
             echo "  [PASS] (${duration}s)"

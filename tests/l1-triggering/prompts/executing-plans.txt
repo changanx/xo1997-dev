@@ -1,1 +1,1 @@
-实现计划已经写好了，在 docs/plans/user-login-plan.md。请帮我执行这个计划，但我这边没有子代理功能。
+实现计划已经写好了，在 docs/plans/user-login-plan.md。请帮我执行这个计划中的所有任务。

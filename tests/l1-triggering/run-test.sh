@@ -17,6 +17,16 @@ if [ -z "$SKILL_NAME" ]; then
     exit 1
 fi
 
+# Skill name aliases (prompt file name -> actual skill name)
+declare -A SKILL_ALIASES=(
+    ["debugging"]="systematic-debugging"
+    ["tdd"]="test-driven-development"
+    ["writing-plans"]="write-plan"
+)
+
+# Get the actual skill name to match
+ACTUAL_SKILL_NAME="${SKILL_ALIASES[$SKILL_NAME]:-$SKILL_NAME}"
+
 # Get paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
@@ -57,16 +67,18 @@ timeout 300 claude -p "$PROMPT" \
     --plugin-dir "$PLUGIN_ROOT" \
     --dangerously-skip-permissions \
     --max-turns "$MAX_TURNS" \
+    --verbose \
     --output-format stream-json \
     > "$LOG_FILE" 2>&1 || true
 
 echo ""
 echo "=== Results ==="
 
-# Check if skill was triggered
-SKILL_PATTERN='"skill":"([^"]*:)?'"${SKILL_NAME}"'"'
-if grep -q '"name":"Skill"' "$LOG_FILE" && grep -qE "$SKILL_PATTERN" "$LOG_FILE"; then
-    echo "PASS: Skill '$SKILL_NAME' was triggered"
+# Check if skill was triggered (check both original name and alias)
+SKILL_PATTERN='"skill":"([^"]*:)?'"${ACTUAL_SKILL_NAME}"'"'
+ORIGINAL_PATTERN='"skill":"([^"]*:)?'"${SKILL_NAME}"'"'
+if grep -q '"name":"Skill"' "$LOG_FILE" && (grep -qE "$SKILL_PATTERN" "$LOG_FILE" || grep -qE "$ORIGINAL_PATTERN" "$LOG_FILE"); then
+    echo "PASS: Skill '$SKILL_NAME' was triggered (matched as '$ACTUAL_SKILL_NAME')"
     TRIGGERED=true
 else
     echo "FAIL: Skill '$SKILL_NAME' was NOT triggered"

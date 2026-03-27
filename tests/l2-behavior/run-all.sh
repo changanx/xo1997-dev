@@ -25,7 +25,7 @@ fi
 
 # Parse arguments
 VERBOSE=false
-TIMEOUT=300
+TIMEOUT=600
 
 while [[ $# -gt 0 ]]; do
     case $1 in

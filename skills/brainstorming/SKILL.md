@@ -44,20 +44,23 @@ After claiming to create/write/save a document:
 
 You MUST create a task for each of these items and complete them in order:
 
-1. **Explore project context** — check files, docs, recent commits
+1. **Create isolated workspace** — **REQUIRED SUB-SKILL:** Use `xo1997-dev:using-git-worktrees` to create an isolated worktree before any design work
+   - This ensures all design documents, plans, and code are created in isolation from main branch
+   - The worktree will persist through the entire workflow: brainstorming → writing-plans → execution
+2. **Explore project context** — check files, docs, recent commits
    - **Verify docs/modules consistency:** Before starting, run `git diff main -- docs/modules/` to confirm the `docs/modules/` directory on the current branch is consistent with `main`. If there are differences, alert the user — they must review and resolve before proceeding with brainstorming.
-2. **Offer visual companion** (if topic will involve visual questions) — this is its own message, not combined with a clarifying question. See the Visual Companion section below.
-3. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
-4. **Write requirements doc** — save requirements summary to `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md` using `docs/templates/requirements-template.md` as reference; include business goals, user scenarios, core features, and acceptance criteria
-5. **✅ VERIFY requirements doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
-6. **Propose 2-3 approaches** — with trade-offs and your recommendation
-7. **Present design** — in sections scaled to their complexity, get user approval after each section
-8. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
-9. **Write design doc** — save to `docs/specs/feature_{模块}_{功能}_{日期}/design.md` and commit
-10. **✅ VERIFY design doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
-11. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
-12. **User reviews written spec** — ask user to review the spec file before proceeding
-13. **Transition to implementation** — invoke writing-plans skill to create implementation plan
+3. **Offer visual companion** (if topic will involve visual questions) — this is its own message, not combined with a clarifying question. See the Visual Companion section below.
+4. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
+5. **Write requirements doc** — save requirements summary to `docs/specs/feature_{模块}_{功能}_{日期}/requirements.md` using `docs/templates/requirements-template.md` as reference; include business goals, user scenarios, core features, and acceptance criteria
+6. **✅ VERIFY requirements doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
+7. **Propose 2-3 approaches** — with trade-offs and your recommendation
+8. **Present design** — in sections scaled to their complexity, get user approval after each section
+9. **Database schema design** (for Spring Boot + MyBatis-Plus projects) — **MANDATORY** discuss and design database schema, verify all tables include unified audit fields
+10. **Write design doc** — save to `docs/specs/feature_{模块}_{功能}_{日期}/design.md` and commit
+11. **✅ VERIFY design doc exists** — Use Read tool to confirm file was created; if missing, create it NOW before proceeding
+12. **Spec review loop** — dispatch spec-document-reviewer subagent with precisely crafted review context (never your session history); fix issues and re-dispatch until approved (max 5 iterations, then surface to human)
+13. **User reviews written spec** — ask user to review the spec file before proceeding
+14. **Transition to implementation** — invoke writing-plans skill to create implementation plan
 
 ### Database Schema Design Checklist (Spring Boot Projects)
 
@@ -81,6 +84,7 @@ If the user says no, confirm the reason and document it.
 
 ```dot
 digraph brainstorming {
+    "Create isolated workspace (worktree)" [shape=box style=filled fillcolor=lightblue];
     "Explore project context" [shape=box];
     "Visual questions ahead?" [shape=diamond];
     "Offer Visual Companion\n(own message, no other content)" [shape=box];
@@ -100,6 +104,7 @@ digraph brainstorming {
     "User reviews spec?" [shape=diamond];
     "Invoke writing-plans skill" [shape=doublecircle];
 
+    "Create isolated workspace (worktree)" -> "Explore project context";
     "Explore project context" -> "Visual questions ahead?";
     "Visual questions ahead?" -> "Offer Visual Companion\n(own message, no other content)" [label="yes"];
     "Visual questions ahead?" -> "Ask clarifying questions" [label="no"];

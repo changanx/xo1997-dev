@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "agent",
-            "prompt": "You are enforcing the verification-before-completion rule.\n\nTask: Check if code was modified without running tests.\n\nSteps:\n1. Run 'git diff --name-only HEAD' to list modified files\n2. Check if any of these file extensions exist: .java, .ts, .vue, .js\n3. If code files were modified:\n   - Search the conversation for test commands: mvn test, npm test, yarn test, vitest run, jest\n   - If NO test command found, respond: {\"ok\": false, \"reason\": \"检测到代码修改但未运行测试。请执行 mvn test 或 npm test 后再完成。\"}\n4. If no code files modified OR tests were run, respond: {\"ok\": true}",
+            "prompt": "You are enforcing the verification-before-completion rule.\n\nTask: Check if source code was modified without running tests.\n\nSteps:\n1. Run 'git diff --name-only HEAD' to list modified files\n2. Check if any files match these patterns (source code whitelist):\n   - src/main/**/*.java (Java source code, NOT test files)\n   - src/**/*.ts (TypeScript, but NOT *.spec.ts or *.test.ts)\n   - src/**/*.vue (Vue components)\n   - src/**/*.js (JavaScript, but NOT *.spec.js or *.test.js)\n3. Exclude these files (no test required):\n   - Test files: *Test.java, *.spec.ts, *.test.ts, *.spec.js, *.test.js\n   - Config files: *.yml, *.yaml, *.xml, *.json, *.properties\n   - Docs: *.md, *.txt\n4. If source code files were modified:\n   - Search the conversation for test commands: mvn test, npm test, yarn test, vitest run, jest\n   - If NO test command found, respond: {\"ok\": false, \"reason\": \"检测到源代码修改但未运行测试。请执行 mvn test 或 npm test 后再完成。\"}\n5. If no source code files modified OR tests were run, respond: {\"ok\": true}",
             "timeout": 30
           }
         ]

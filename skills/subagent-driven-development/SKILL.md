@@ -39,9 +39,30 @@ digraph when_to_use {
 
 ## The Process
 
+### Step 0: Verify Isolated Workspace
+
+**Before starting execution, verify you are in a worktree:**
+
+```bash
+git worktree list
+```
+
+Check if the current working directory appears in the worktree list.
+
+**If NOT in a worktree:**
+- This skill should only be called after brainstorming, which creates the worktree
+- Ask the user: "No isolated workspace detected. Should I create one, or should we start with brainstorming first?"
+
+**If already in a worktree:** Proceed to Step 1.
+
 ```dot
 digraph process {
     rankdir=TB;
+
+    "Verify worktree" [shape=box style=filled fillcolor=lightblue];
+    "In worktree?" [shape=diamond];
+    "Ask user or create worktree" [shape=box];
+    "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
 
     subgraph cluster_per_task {
         label="Per Task";
@@ -58,11 +79,14 @@ digraph process {
         "Mark task complete in TodoWrite" [shape=box];
     }
 
-    "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
     "Use xo1997-dev:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
+    "Verify worktree" -> "In worktree?";
+    "In worktree?" -> "Ask user or create worktree" [label="no"];
+    "In worktree?" -> "Read plan, extract all tasks with full text, note context, create TodoWrite" [label="yes"];
+    "Ask user or create worktree" -> "Read plan, extract all tasks with full text, note context, create TodoWrite";
     "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
     "Dispatch implementer subagent (./implementer-prompt.md)" -> "Implementer subagent asks questions?";
     "Implementer subagent asks questions?" -> "Answer questions, provide context" [label="yes"];
@@ -265,7 +289,7 @@ Done!
 ## Integration
 
 **Required workflow skills:**
-- **xo1997-dev:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
+- **xo1997-dev:brainstorming** - Creates the worktree and design document (should be called before this skill)
 - **xo1997-dev:writing-plans** - Creates the plan this skill executes
 - **xo1997-dev:requesting-code-review** - Code review template for reviewer subagents
 - **xo1997-dev:finishing-a-development-branch** - Complete development after all tasks

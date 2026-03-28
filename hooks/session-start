@@ -24,7 +24,31 @@ escape_for_json() {
 }
 
 using_skill_escaped=$(escape_for_json "$using_skill_content")
-session_context="<EXTREMELY_IMPORTANT>\nYou have xo1997-dev skills.\n\n**Below is the full content of your 'xo1997-dev:using-xo1997-dev' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_skill_escaped}\n</EXTREMELY_IMPORTANT>"
+
+# Check for stale worktrees
+worktree_warning=""
+if command -v git &> /dev/null && git rev-parse --git-dir &> /dev/null 2>&1; then
+    # Check for .worktrees or worktrees directory
+    worktree_dir=""
+    if [ -d ".worktrees" ]; then
+        worktree_dir=".worktrees"
+    elif [ -d "worktrees" ]; then
+        worktree_dir="worktrees"
+    fi
+
+    if [ -n "$worktree_dir" ]; then
+        # Count worktrees (excluding current)
+        current_branch=$(git branch --show-current 2>/dev/null || echo "")
+        stale_worktrees=$(git worktree list --porcelain 2>/dev/null | grep -c "worktree" || echo "0")
+        if [ "$stale_worktrees" -gt 1 ]; then
+            worktree_warning="\n\n<WORKTREE_WARNING>\n检测到存在 $((stale_worktrees - 1)) 个残留的 worktree。如果之前的工作已结束但未清理，请运行 'git worktree list' 查看，并使用 'git worktree remove <path>' 清理。\n</WORKTREE_WARNING>"
+        fi
+    fi
+fi
+
+worktree_warning_escaped=$(escape_for_json "$worktree_warning")
+
+session_context="<EXTREMELY_IMPORTANT>\nYou have xo1997-dev skills.\n\n**Below is the full content of your 'xo1997-dev:using-xo1997-dev' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_skill_escaped}${worktree_warning_escaped}\n</EXTREMELY_IMPORTANT>"
 
 # Output context injection as JSON.
 # Cursor hooks expect additional_context.

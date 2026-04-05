@@ -17,6 +17,7 @@ PySide6 桌面客户端开发工作流插件，基于 PyQt-Fluent-Widgets 最佳
 |------|------|------|
 | PySide6 | 6.x | Qt 绑定 |
 | PyQt-Fluent-Widgets | 1.11.x | Fluent Design UI 组件 |
+| SQLite | 3.x | 本地数据存储 |
 | pytest | 7.x | 测试框架 |
 | pytest-qt | 4.x | Qt 测试工具 |
 
@@ -67,6 +68,7 @@ PySide6 桌面客户端开发工作流插件，基于 PyQt-Fluent-Widgets 最佳
 | **project-structure** | 项目结构规范 |
 | **component-development** | 组件开发模式 |
 | **testing-patterns** | pytest-qt 测试模式和最佳实践 |
+| **local-storage** | SQLite 本地数据存储 |
 
 ### 命令
 
@@ -161,7 +163,8 @@ pyside6-dev/
 │   ├── project-structure/
 │   ├── testing-patterns/
 │   ├── fluent-design/
-│   └── theming/
+│   ├── theming/
+│   └── local-storage/
 ├── commands/             # 斜杠命令
 │   ├── new-component.md
 │   └── new-interface.md

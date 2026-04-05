@@ -44,7 +44,10 @@ PySide6 桌面客户端开发工作流插件，基于 PyQt-Fluent-Widgets 最佳
 | 技能 | 用途 | 类型 |
 |------|------|------|
 | **brainstorming** | 需求探索与设计 | 刚性 |
+| **writing-plans** | 将设计转化为实现计划 | 刚性 |
+| **executing-plans** | 执行实现计划 | 刚性 |
 | **test-driven-development** | 测试驱动开发 | 刚性 |
+| **systematic-debugging** | 系统化调试 | 刚性 |
 | **verification-before-completion** | 完成前验证 | 刚性 |
 
 ### PySide6 专属技能
@@ -138,13 +141,16 @@ pyside6-dev/
 ├── skills/               # 技能库
 │   ├── using-pyside6-dev/
 │   ├── brainstorming/
+│   ├── writing-plans/        # 计划编写
+│   ├── executing-plans/      # 计划执行
 │   ├── test-driven-development/
+│   ├── systematic-debugging/ # 系统化调试
+│   ├── verification-before-completion/
 │   ├── component-development/
 │   ├── project-structure/
 │   ├── testing-patterns/
-│   ├── fluent-design/    # 新增: Fluent Design 原则
-│   ├── theming/          # 新增: 主题管理
-│   └── verification-before-completion/
+│   ├── fluent-design/
+│   └── theming/
 ├── commands/             # 斜杠命令
 │   ├── new-component.md
 │   └── new-interface.md

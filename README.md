@@ -50,6 +50,14 @@ PySide6 桌面客户端开发工作流插件，基于 PyQt-Fluent-Widgets 最佳
 | **systematic-debugging** | 系统化调试 | 刚性 |
 | **verification-before-completion** | 完成前验证 | 刚性 |
 
+### 工程规范技能
+
+| 技能 | 用途 |
+|------|------|
+| **using-git-worktrees** | 隔离开发环境 |
+| **committing-changes** | 提交规范 |
+| **finishing-a-development-branch** | 分支完成流程 |
+
 ### PySide6 专属技能
 
 | 技能 | 用途 |
@@ -141,11 +149,14 @@ pyside6-dev/
 ├── skills/               # 技能库
 │   ├── using-pyside6-dev/
 │   ├── brainstorming/
-│   ├── writing-plans/        # 计划编写
-│   ├── executing-plans/      # 计划执行
+│   ├── writing-plans/
+│   ├── executing-plans/
 │   ├── test-driven-development/
-│   ├── systematic-debugging/ # 系统化调试
+│   ├── systematic-debugging/
 │   ├── verification-before-completion/
+│   ├── using-git-worktrees/
+│   ├── committing-changes/
+│   ├── finishing-a-development-branch/
 │   ├── component-development/
 │   ├── project-structure/
 │   ├── testing-patterns/

@@ -51,6 +51,8 @@ PySide6 桌面客户端开发工作流插件，基于 PyQt-Fluent-Widgets 最佳
 
 | 技能 | 用途 |
 |------|------|
+| **fluent-design** | Fluent Design 原则与组件选择 |
+| **theming** | 主题管理、StyleSheet、Mica 效果 |
 | **project-structure** | 项目结构规范 |
 | **component-development** | 组件开发模式 |
 | **testing-patterns** | pytest-qt 测试模式和最佳实践 |
@@ -139,6 +141,9 @@ pyside6-dev/
 │   ├── test-driven-development/
 │   ├── component-development/
 │   ├── project-structure/
+│   ├── testing-patterns/
+│   ├── fluent-design/    # 新增: Fluent Design 原则
+│   ├── theming/          # 新增: 主题管理
 │   └── verification-before-completion/
 ├── commands/             # 斜杠命令
 │   ├── new-component.md

@@ -102,27 +102,116 @@ if __name__ == "__main__":
 ### config.py
 
 ```python
-from qfluentwidgets import QConfig, ConfigItem, Theme
+# app/common/config.py
+from qfluentwidgets import (
+    QConfig, ConfigItem, OptionsConfigItem, RangeConfigItem,
+    OptionsValidator, RangeValidator, BoolValidator, EnumSerializer,
+    Theme, qconfig
+)
 
 class Config(QConfig):
-    themeMode = ConfigItem("Appearance", "Theme", Theme.AUTO)
+    """应用配置"""
+
+    # 主题配置
+    themeMode = OptionsConfigItem(
+        "QFluentWidgets", "ThemeMode", Theme.AUTO,
+        OptionsValidator(Theme), EnumSerializer(Theme)
+    )
+
+    # Mica 效果（仅 Windows 11）
+    micaEnabled = ConfigItem(
+        "MainWindow", "MicaEnabled", True, BoolValidator()
+    )
+
+    # 窗口几何
     windowGeometry = ConfigItem("MainWindow", "Geometry", None)
 
+    # DPI 缩放
+    dpiScale = OptionsConfigItem(
+        "MainWindow", "DpiScale", "Auto",
+        OptionsValidator([1, 1.25, 1.5, 1.75, 2, "Auto"]),
+        restart=True
+    )
+
+    # 下载文件夹
+    downloadFolder = ConfigItem(
+        "Folders", "Download", "app/download", FolderValidator()
+    )
+
+# 全局配置实例
 cfg = Config()
+
+# 加载配置文件
 qconfig.load('app/config/config.json', cfg)
 ```
 
 ### signal_bus.py
 
 ```python
+# app/common/signal_bus.py
 from PySide6.QtCore import QObject, Signal
 
 class SignalBus(QObject):
-    navigateTo = Signal(str)
-    themeChanged = Signal(str)
-    refreshRequested = Signal()
+    """全局信号总线 - 用于组件间通信"""
 
+    # 导航信号
+    navigateTo = Signal(str)              # 导航到指定页面
+    navigateBack = Signal()               # 返回上一页
+
+    # 主题信号
+    themeChanged = Signal(str)            # 主题变化
+
+    # 数据信号
+    refreshRequested = Signal()           # 请求刷新
+    dataLoaded = Signal(object)           # 数据加载完成
+
+    # 用户信号
+    userLoggedIn = Signal(object)         # 用户登录
+    userLoggedOut = Signal()              # 用户登出
+
+    # 业务信号（根据应用需求添加）
+    switchToSampleCard = Signal(str, int) # 切换到示例卡片
+    micaEnableChanged = Signal(bool)      # Mica 效果状态
+
+# 全局单例
 signalBus = SignalBus()
+```
+
+### style_sheet.py
+
+```python
+# app/common/style_sheet.py
+from enum import Enum
+from qfluentwidgets import StyleSheetBase, Theme, qconfig
+
+class StyleSheet(StyleSheetBase, Enum):
+    """样式表定义 - 支持主题切换"""
+
+    # 界面样式
+    HOME_INTERFACE = "home_interface"
+    SETTING_INTERFACE = "setting_interface"
+
+    # 组件样式
+    USER_CARD = "user_card"
+    SAMPLE_CARD = "sample_card"
+
+    def path(self, theme=Theme.AUTO):
+        """获取样式表路径"""
+        theme = qconfig.theme if theme == Theme.AUTO else theme
+        return f":/qss/{theme.value.lower()}/{self.value}.qss"
+```
+
+**使用方式：**
+
+```python
+# 在组件中应用样式
+from ..common.style_sheet import StyleSheet
+
+class HomeInterface(ScrollArea):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        # ...
+        StyleSheet.HOME_INTERFACE.apply(self)  # 自动处理主题切换
 ```
 
 ## Configuration Files

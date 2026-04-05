@@ -1,9 +1,20 @@
 ---
 name: component-development
-description: Use when creating reusable UI components - provides patterns for widgets, signals, properties, and layouts
+description: Use when creating reusable UI components - provides patterns for widgets, signals, properties, and layouts based on PyQt-Fluent-Widgets
 ---
 
 # Component Development Patterns
+
+## PyQt-Fluent-Widgets 卡片类型
+
+选择正确的卡片基类是组件开发的第一步：
+
+| 类型 | 特点 | 适用场景 | 动画 |
+|------|------|----------|------|
+| `CardWidget` | 悬停高亮、点击动画 | 可交互卡片 | ✓ |
+| `SimpleCardWidget` | 无动画 | 静态展示卡片 | ✗ |
+| `ElevatedCardWidget` | 阴影+悬浮效果 | 强调型卡片 | ✓ |
+| `HeaderCardWidget` | 带标题头 | 分组展示 | ✓ |
 
 ## Design Principles
 
@@ -190,6 +201,150 @@ class MyInterface(ScrollArea):
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 ```
 
+## CardWidget 继承模式
+
+### CardWidget（可交互卡片）
+
+```python
+from qfluentwidgets import CardWidget, IconWidget, BodyLabel, CaptionLabel
+from PySide6.QtCore import Signal, Qt
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout
+
+class UserCard(CardWidget):
+    """用户卡片 - 支持悬停高亮和点击动画"""
+    
+    # 信号
+    clicked = Signal()
+    userSelected = Signal(object)  # User 对象
+    
+    def __init__(self, user=None, parent=None):
+        super().__init__(parent=parent)
+        self._user = user
+        
+        # 设置 objectName 用于 QSS 选择器
+        self.setObjectName('userCard')
+        
+        self._initUI()
+        self._initLayout()
+        self._connectSignals()
+    
+    def _initUI(self):
+        """初始化 UI 组件"""
+        self.avatarLabel = IconWidget(self)
+        self.nameLabel = BodyLabel(self)
+        self.emailLabel = CaptionLabel(self)
+        self.actionBtn = TransparentToolButton(FIF.MORE, self)
+        
+        # 设置 objectName
+        self.avatarLabel.setObjectName('avatarLabel')
+        self.nameLabel.setObjectName('nameLabel')
+        
+        if self._user:
+            self._updateUI()
+    
+    def _initLayout(self):
+        """设置布局"""
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(16, 12, 16, 12)
+        layout.setSpacing(12)
+        
+        # 左侧：头像
+        layout.addWidget(self.avatarLabel)
+        
+        # 中间：信息
+        infoLayout = QVBoxLayout()
+        infoLayout.setSpacing(4)
+        infoLayout.addWidget(self.nameLabel)
+        infoLayout.addWidget(self.emailLabel)
+        layout.addLayout(infoLayout, 1)
+        
+        # 右侧：操作
+        layout.addWidget(self.actionBtn)
+    
+    def _connectSignals(self):
+        """连接信号"""
+        self.actionBtn.clicked.connect(self._onActionClick)
+    
+    def _updateUI(self):
+        """更新 UI 显示"""
+        self.nameLabel.setText(self._user.name)
+        self.emailLabel.setText(self._user.email)
+    
+    def setUser(self, user):
+        """设置用户数据"""
+        self._user = user
+        self._updateUI()
+    
+    def mouseReleaseEvent(self, e):
+        """点击事件 - CardWidget 自动处理悬停动画"""
+        super().mouseReleaseEvent(e)
+        self.clicked.emit()
+        if self._user:
+            self.userSelected.emit(self._user)
+```
+
+### SimpleCardWidget（静态卡片）
+
+```python
+from qfluentwidgets import SimpleCardWidget, BodyLabel, CaptionLabel
+
+class StatCard(SimpleCardWidget):
+    """统计卡片 - 无动画的静态展示"""
+    
+    def __init__(self, title: str, parent=None):
+        super().__init__(parent=parent)
+        self._title = title
+        
+        self.titleLabel = CaptionLabel(title, self)
+        self.valueLabel = TitleLabel("-", self)
+        
+        self._initLayout()
+    
+    def _initLayout(self):
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(8)
+        
+        layout.addWidget(self.titleLabel)
+        layout.addWidget(self.valueLabel)
+    
+    def setValue(self, value: str):
+        """设置统计值"""
+        self.valueLabel.setText(value)
+```
+
+### ElevatedCardWidget（强调卡片）
+
+```python
+from qfluentwidgets import ElevatedCardWidget, BodyLabel
+
+class FeaturedCard(ElevatedCardWidget):
+    """特色卡片 - 带阴影和悬浮效果"""
+    
+    def __init__(self, icon, title: str, description: str, parent=None):
+        super().__init__(parent=parent)
+        
+        self.iconWidget = IconWidget(icon, self)
+        self.titleLabel = SubtitleLabel(title, self)
+        self.descLabel = BodyLabel(description, self)
+        
+        self._initLayout()
+    
+    def _initLayout(self):
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(20, 16, 20, 16)
+        layout.setSpacing(16)
+        
+        layout.addWidget(self.iconWidget)
+        
+        textLayout = QVBoxLayout()
+        textLayout.addWidget(self.titleLabel)
+        textLayout.addWidget(self.descLabel)
+        layout.addLayout(textLayout, 1)
+```
+
+---
+
 ## Common Patterns
 
 ### Loading State
@@ -243,3 +398,6 @@ class ErrorBoundary(QWidget):
 | **Block signals during updates** | `widget.blockSignals(True)` |
 | **Clean up in closeEvent** | Save state, release resources |
 | **Support themes** | Test with light and dark themes |
+| **Set objectName** | For QSS selector targeting |
+| **Use CardWidget for interactivity** | Get free hover/click animations |
+| **Apply StyleSheet via StyleSheetBase** | See theming skill for details |

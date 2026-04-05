@@ -1,0 +1,1 @@
+现在要实现 UserCard 组件的 setUser 方法，先写测试。

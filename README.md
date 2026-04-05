@@ -168,8 +168,29 @@ pyside6-dev/
 ├── commands/             # 斜杠命令
 │   ├── new-component.md
 │   └── new-interface.md
+├── tests/                # 工作流测试
+│   ├── helpers/          # 测试辅助函数
+│   ├── l1-triggering/    # L1 触发测试
+│   └── l2-behavior/      # L2 行为测试
 └── README.md
 ```
+
+## 测试
+
+运行工作流技能测试：
+
+```bash
+# 运行所有 L1 触发测试
+cd tests/l1-triggering && ./run-all.sh
+
+# 运行单个 L1 测试
+cd tests/l1-triggering && ./run-test.sh brainstorming
+
+# 运行 L2 行为测试
+cd tests/l2-behavior && ./run-all.sh
+```
+
+详见 [tests/README.md](tests/README.md)。
 
 ## 许可证
 

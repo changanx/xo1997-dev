@@ -1,0 +1,1 @@
+CardWidget 和 SimpleCardWidget 有什么区别？什么时候用哪个？

@@ -14,7 +14,50 @@ description: Use when implementation is complete, all tests pass, and you need t
 - 所有测试通过
 - 功能已验证
 
+## Immediate Action
+
+**Upon invoking this skill, you MUST immediately:**
+
+1. Create a TodoWrite with the following tasks:
+```
+1. [pending] 强制验证（调用 verification-before-completion）
+2. [pending] 审查变更
+3. [pending] 选择集成方式
+4. [pending] 执行集成
+5. [pending] 清理分支
+```
+
+2. Mark the first task as in_progress and start verification
+
+<HARD-GATE>
+Before proceeding to any integration step:
+1. MUST call verification-before-completion skill first
+2. MUST have verification evidence (test output, manual test results)
+3. MUST confirm all tests pass with visible output
+</HARD-GATE>
+
 ## The Process
+
+### Step 0: Mandatory Verification (DO NOT SKIP)
+
+**Before any other step, invoke verification-before-completion skill:**
+
+```bash
+# This skill will be called automatically
+# It ensures:
+# - All tests pass
+# - Code is committed
+# - Feature is verified
+```
+
+**Evidence Required:**
+```
+✓ pytest tests/ -v 输出显示所有测试通过
+✓ git status 显示 working tree clean
+✓ 手动功能验证截图或描述
+```
+
+**Only after verification evidence is collected, proceed to Step 1.**
 
 ### Step 1: Final Verification
 
@@ -253,6 +296,7 @@ git worktree remove .claude/worktrees/feature-user-card
 
 Before marking complete:
 
+- [ ] **强制验证已完成** (verification-before-completion)
 - [ ] 所有测试通过
 - [ ] 代码已提交
 - [ ] 变更已审查
@@ -266,6 +310,9 @@ Before marking complete:
 **Called after:**
 - **executing-plans** - 所有任务完成后
 - **verification-before-completion** - 验证通过后
+
+**Calls:**
+- **verification-before-completion** - 强制验证步骤 (必须先调用)
 
 **Related skills:**
 - **using-git-worktrees** - 创建隔离环境

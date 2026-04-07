@@ -74,6 +74,50 @@ Before marking complete:
 - [ ] Existing features still work
 - [ ] No console warnings
 
+### End-to-End Testing (REQUIRED for data features)
+
+**对于涉及数据导入/导出/处理的功能，必须执行端到端验证：**
+
+```bash
+# 使用真实/模板数据运行完整流程
+python -c "
+from core.excel_processor import ExcelProcessor
+from core.ppt_generator import PPTGenerator
+
+# 1. 导入真实数据
+processor = ExcelProcessor()
+success, msg = processor.import_excel('data_template.xlsx')
+print(f'导入: {success}, {msg}')
+print(f'部门数: {processor.department_count}')
+print(f'员工数: {processor.employee_count}')
+
+# 2. 验证数据正确
+assert processor.department_count > 0, '部门数应为正数'
+assert processor.employee_count > 0, '员工数应为正数'
+
+# 3. 生成输出
+tree = processor.get_department_tree()
+stats = processor.get_employee_stats()
+generator = PPTGenerator()
+success, msg = generator.generate(tree, stats, 'test_output.pptx')
+print(f'输出: {success}, {msg}')
+
+import os
+assert os.path.exists('test_output.pptx'), '输出文件应存在'
+print('端到端验证通过！')
+"
+```
+
+<HARD-GATE>
+**数据功能验证必须包含：**
+1. 使用真实/模板数据文件
+2. 验证导入数量与源数据一致
+3. 验证输出文件生成成功
+4. 清理测试数据
+
+**没有端到端验证 = 未完成验证！**
+</HARD-GATE>
+
 ## Common Verification Failures
 
 ### Test Failures

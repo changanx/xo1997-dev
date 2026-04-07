@@ -1,7 +1,7 @@
 {
   "name": "pyside6-dev",
   "description": "PySide6 desktop client development workflow: architecture design, component development, TDD, and verification based on PyQt-Fluent-Widgets best practices",
-  "version": "1.3.0",
+  "version": "1.5.0",
   "author": {
     "name": "m1582",
     "email": "m1582@example.com"

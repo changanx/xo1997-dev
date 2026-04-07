@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4b1636fb-5417-4789-8ef2-a5773b82beb4" name="Changes" comment="更改目录结构">
+      <change beforePath="$PROJECT_DIR$/.claude-plugin/plugin.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude-plugin/plugin.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/brainstorming/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/brainstorming/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/executing-plans/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/executing-plans/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/finishing-a-development-branch/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/finishing-a-development-branch/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/project-structure/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/project-structure/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/test-driven-development/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/test-driven-development/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/verification-before-completion/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/verification-before-completion/SKILL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/skills/writing-plans/SKILL.md" beforeDir="false" afterPath="$PROJECT_DIR$/skills/writing-plans/SKILL.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;changanx&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/changanx/xo1997-dev.git&quot;,
+    &quot;accountId&quot;: &quot;5c1d1880-f78f-4326-a212-ad537cf3d781&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="3BLRIHmnFu71qQqqGlNAslrieJp" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;pyside6&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/m1582/Desktop/AI/xo1997-dev&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\m1582\Desktop\AI\xo1997-dev\" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.28238.7" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4b1636fb-5417-4789-8ef2-a5773b82beb4" name="Changes" comment="" />
+      <created>1774266282448</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774266282448</updated>
+      <workItem from="1775372114711" duration="18069000" />
+      <workItem from="1775406920549" duration="2519000" />
+    </task>
+    <task id="LOCAL-00001" summary="更改目录结构">
+      <option name="closed" value="true" />
+      <created>1774266446993</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774266446993</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="pyside6" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="更改目录结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="更改目录结构" />
+  </component>
+</project>

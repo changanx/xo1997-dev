@@ -11,7 +11,33 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Save plans to:** `docs/plans/{YYYY-MM-DD}-{topic}-plan.md`
+## Immediate Action
+
+**Upon invoking this skill, you MUST immediately:**
+
+1. Create a TodoWrite with the following tasks:
+```
+1. [pending] 检查设计文档
+2. [pending] 创建任务列表
+3. [pending] 编写实现计划
+4. [pending] 验证计划文件
+```
+
+2. Mark the first task as in_progress and start checking design doc
+
+## Document Paths
+
+**设计文档路径** (由 brainstorming 创建):
+```
+docs/specs/{YYYY-MM-DD}-{topic}/design.md
+```
+
+**实现计划路径**:
+```
+docs/specs/{YYYY-MM-DD}-{topic}/plan.md
+```
+
+**注意**: 设计文档和实现计划放在同一目录下，便于管理。
 
 ## Worktree Setup
 

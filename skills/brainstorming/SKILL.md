@@ -11,15 +11,32 @@ Help turn ideas into fully formed designs and specs through natural collaborativ
 Do NOT write any code, create any files, or take any implementation action until you have presented a design and the user has approved it.
 </HARD-GATE>
 
+## Immediate Action
+
+**Upon invoking this skill, you MUST immediately:**
+
+1. Create a TodoWrite with the following tasks:
+```
+1. [pending] 探索项目上下文
+2. [pending] 提出澄清问题
+3. [pending] 提出 2-3 个方案
+4. [pending] 展示设计
+5. [pending] 编写设计文档
+6. [pending] 用户审核设计
+7. [pending] 切换到实现计划
+```
+
+2. Mark the first task as in_progress and start exploring
+
 ## Checklist
 
-You MUST create a task for each of these items and complete them in order:
+Complete these tasks in order, marking each as completed before moving to the next:
 
 1. **Explore project context** — check files, docs, existing components
 2. **Ask clarifying questions** — one at a time, understand purpose/constraints/success criteria
 3. **Propose 2-3 approaches** — with trade-offs and your recommendation
 4. **Present design** — UI layout, component structure, signal/slot connections
-5. **Write design doc** — save to `docs/specs/YYYY-MM-DD-<topic>-design.md`
+5. **Write design doc** — save to `docs/specs/{YYYY-MM-DD}-{topic}/design.md`
 6. **User reviews design** — ask user to review before proceeding
 7. **Transition to implementation** — invoke writing-plans skill
 

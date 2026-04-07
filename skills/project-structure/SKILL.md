@@ -239,3 +239,109 @@ testpaths = tests
 qt_api = pyside6
 addopts = -v
 ```
+
+## Import Conventions
+
+### Absolute vs Relative Imports
+
+**推荐使用绝对导入**，避免多层相对导入的问题：
+
+```python
+# ✅ 推荐：绝对导入
+from data.database import db
+from data.models.employee import Employee
+from data.repositories.employee_repository import EmployeeRepository
+from app.components.status_card_widget import StatusCardWidget
+
+# ❌ 避免：多层相对导入
+from ...data.database import db  # 容易出错
+from ..components.widget import MyWidget
+```
+
+### Package Structure for Imports
+
+```
+project/
+├── app/
+│   ├── __init__.py          # from app import main
+│   ├── main.py
+│   ├── view/
+│   │   ├── __init__.py      # from app.view import MainWindow
+│   │   └── main_window.py
+│   └── components/
+│       ├── __init__.py      # from app.components import StatusCardWidget
+│       └── status_card_widget.py
+├── data/
+│   ├── __init__.py          # from data import db, Department, Employee
+│   ├── database.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── employee.py
+│   └── repositories/
+│       ├── __init__.py
+│       └── employee_repository.py
+└── core/
+    ├── __init__.py          # from core import ExcelProcessor
+    └── excel_processor.py
+```
+
+### __init__.py Patterns
+
+```python
+# app/__init__.py
+from .main import main
+
+__all__ = ["main"]
+
+# app/view/__init__.py
+from .main_window import MainWindow
+from .excel_ppt_interface import ExcelPPTInterface
+
+__all__ = ["MainWindow", "ExcelPPTInterface"]
+
+# data/__init__.py
+from .database import Database, db
+from .models.department import Department
+from .models.employee import Employee
+from .repositories.department_repository import DepartmentRepository
+from .repositories.employee_repository import EmployeeRepository
+
+__all__ = [
+    "Database", "db",
+    "Department", "Employee",
+    "DepartmentRepository", "EmployeeRepository",
+]
+```
+
+### Cross-Layer Imports
+
+```
+view/ → components/    ✅ 允许
+view/ → core/          ✅ 允许
+view/ → data/          ✅ 允许
+components/ → data/    ✅ 允许
+core/ → data/          ✅ 允许
+data/ → core/          ❌ 禁止（循环依赖风险）
+data/ → view/          ❌ 禁止
+```
+
+### Running the Application
+
+```bash
+# 从项目根目录运行
+python -m app.main
+
+# 或者
+cd project
+python app/main.py
+```
+
+### Running Tests
+
+```bash
+# 从项目根目录运行
+pytest tests/ -v
+
+# 运行特定测试
+pytest tests/test_components/test_status_card.py -v
+```

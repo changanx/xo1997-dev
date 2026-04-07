@@ -11,11 +11,34 @@ description: Use when you have a written implementation plan to execute in a sep
 
 **Announce at start:** "I'm using the executing-plans skill to implement this plan."
 
+## Immediate Action
+
+**Upon invoking this skill, you MUST immediately:**
+
+1. Create a TodoWrite with the following tasks:
+```
+1. [pending] 加载计划文件
+2. [pending] 审阅计划并确认理解
+3. [pending] 执行所有任务
+4. [pending] 运行全部测试
+5. [pending] 调用 verification-before-completion
+6. [pending] 调用 finishing-a-development-branch
+```
+
+2. Mark the first task as in_progress and load the plan
+
+## Document Paths
+
+**计划文件路径**:
+```
+docs/specs/{YYYY-MM-DD}-{topic}/plan.md
+```
+
 ## The Process
 
 ### Step 1: Load and Review Plan
 
-1. 读取计划文件：`docs/plans/{YYYY-MM-DD}-{topic}-plan.md`
+1. 读取计划文件：`docs/specs/{YYYY-MM-DD}-{topic}/plan.md`
 2. 理解每个任务的目标和步骤
 3. 如有疑问：在开始前提出
 4. 无疑问：创建 TodoWrite 并开始执行
@@ -35,7 +58,7 @@ description: Use when you have a written implementation plan to execute in a sep
 
 1. 运行全部测试：`pytest tests/ -v`
 2. 使用 verification-before-completion 技能
-3. 报告完成状态
+3. 调用 finishing-a-development-branch 技能完成集成
 
 ## When to Stop and Ask
 
@@ -201,10 +224,17 @@ self.addSubInterface(
 
 **Required workflow skills:**
 - **test-driven-development** - 每个实现任务的 RED-GREEN 循环
-- **verification-before-completion** - 完成前验证
+- **verification-before-completion** - 完成前验证（必须调用）
+- **finishing-a-development-branch** - 完成后集成（必须调用）
 
 **Called after:**
 - **writing-plans** - 创建计划后
+
+**Calls:**
+- **test-driven-development** - 每个实现任务
+- **committing-changes** - 提交代码
+- **verification-before-completion** - 所有任务完成后
+- **finishing-a-development-branch** - 验证通过后
 
 ## Remember
 
@@ -213,3 +243,5 @@ self.addSubInterface(
 - 不要跳过验证
 - 遇到阻塞立即停止，不要猜测
 - 每个任务完成后提交（使用 conventional commits）
+- **所有任务完成后必须调用 verification-before-completion**
+- **验证通过后必须调用 finishing-a-development-branch**

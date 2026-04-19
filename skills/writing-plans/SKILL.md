@@ -147,6 +147,36 @@ This structure informs the task decomposition. Each task should produce self-con
 - "Run the tests and make sure they pass" - step
 - "Commit" - step
 
+## Step Verification Format (MANDATORY)
+
+**Every step MUST declare its verification point:**
+
+```markdown
+- [ ] **Step N: [动作描述]** → verify: [验证命令/检查点]
+```
+
+**格式要求:**
+- 每个步骤必须包含 `→ verify:` 声明
+- 验证点必须是可执行、可检测的
+- 避免模糊描述如 "检查是否正确"
+
+**示例:**
+```markdown
+- [ ] **Step 1: 编写用户创建测试** → verify: mvn test 失败（功能未实现）
+- [ ] **Step 2: 实现用户创建逻辑** → verify: mvn test 通过
+- [ ] **Step 3: 添加 API 端点** → verify: curl POST /api/users 返回 200
+- [ ] **Step 4: 提交代码** → verify: git log 显示新提交
+```
+
+**验证点类型:**
+| 类型 | 示例 |
+|------|------|
+| 测试结果 | `mvn test 通过`、`npm test: 0 failures` |
+| 编译结果 | `mvn compile: BUILD SUCCESS` |
+| HTTP 响应 | `curl 返回 200`、`响应包含 "data"` |
+| Git 状态 | `git log 显示新提交`、`git status: clean` |
+| 文件存在 | `ls src/.../User.java 成功` |
+
 ## Plan Document Header
 
 **Every plan MUST start with this header:**

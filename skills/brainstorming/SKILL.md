@@ -223,6 +223,10 @@ Wait for the user's response. If they request changes, make them and re-run the 
 ## Key Principles
 
 - **One question at a time** - Don't overwhelm with multiple questions
+- **Surface assumptions explicitly** - If uncertain, ask rather than guess
+- **Present multiple interpretations** - Don't pick silently when ambiguity exists
+- **Push back when warranted** - If a simpler approach exists, say so
+- **Stop when confused** - Name what's unclear and ask
 - **Multiple choice preferred** - Easier to answer than open-ended when possible
 - **YAGNI ruthlessly** - Remove unnecessary features from all designs
 - **Explore alternatives** - Always propose 2-3 approaches before settling

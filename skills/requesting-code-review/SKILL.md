@@ -9,6 +9,26 @@ Dispatch xo1997-dev:code-reviewer subagent to catch issues before they cascade. 
 
 **Core principle:** Review early, review often.
 
+## Surgical Changes Principle
+
+**Touch only what you must. Clean up only your own mess.**
+
+审查边界必须严格限制在任务范围内：
+
+**禁止报告/建议:**
+- 与任务无关的代码风格改进
+- "顺便"重构相邻代码
+- 用户未要求的优化建议
+- 添加用户未要求的功能
+- 改变与任务无关的注释或格式
+
+**允许报告:**
+- 指出无关的死代码（仅 mention，不要求删除）
+- 简化**当前实现**的建议（不是相邻代码）
+- 实质性风险（安全、数据丢失、并发问题）
+
+**测试:** 每个建议能否追溯到原始需求？不能 → 不报告。
+
 ## When to Request Review
 
 **Mandatory:**

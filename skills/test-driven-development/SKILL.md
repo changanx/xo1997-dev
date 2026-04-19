@@ -146,6 +146,11 @@ Confirm:
 
 Write simplest code to pass the test.
 
+**Simplicity Test (提交 GREEN 代码前必问):**
+- "Would a senior engineer say this is overcomplicated?" → If YES, simplify
+- "Can this be solved in fewer lines without losing clarity?" → If YES, simplify
+- "Did I add anything beyond what the test requires?" → If YES, remove it
+
 <Good>
 ```java
 @Service
@@ -185,7 +190,7 @@ public class UserServiceImpl implements UserService {
     }
 }
 ```
-Over-engineered
+Over-engineered - fails Simplicity Test
 </Bad>
 
 Don't add features, refactor other code, or "improve" beyond the test.

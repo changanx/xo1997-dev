@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Test: writing-plans skill behavior
-# Verifies worktree creation timing and task granularity requirements
+# Verifies task granularity and plan structure requirements
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -12,23 +12,10 @@ echo ""
 passed=0
 failed=0
 
-# Test 1: Verify worktree creation timing
-echo "Test 1: Worktree creation timing..."
+# Test 1: Verify database design confirmation step
+echo "Test 1: Database design confirmation..."
 
-output=$(run_claude "In writing-plans, when is the worktree created? At what step does this happen?" 60)
-
-if assert_contains "$output" "Step 2\|creating.*workspace\|worktree\|隔离\|isolat" "Mentions worktree creation"; then
-    passed=$((passed + 1))
-else
-    failed=$((failed + 1))
-fi
-
-echo ""
-
-# Test 2: Verify database design confirmation step
-echo "Test 2: Database design confirmation..."
-
-output=$(run_claude "What happens in Step 3 of writing-plans? What is confirmed or created?" 60)
+output=$(run_claude "What happens in the database design step of writing-plans? What is confirmed or created?" 60)
 
 if assert_contains "$output" "database\|数据库\|confirm\|确认" "Mentions database confirmation"; then
     passed=$((passed + 1))
@@ -38,8 +25,8 @@ fi
 
 echo ""
 
-# Test 3: Verify task granularity
-echo "Test 3: Task granularity requirement..."
+# Test 2: Verify task granularity
+echo "Test 2: Task granularity requirement..."
 
 output=$(run_claude "In writing-plans, what is the recommended time duration for each task step? How long should each step take?" 60)
 
@@ -51,10 +38,10 @@ fi
 
 echo ""
 
-# Test 4: Verify file structure planning
-echo "Test 4: File structure planning..."
+# Test 3: Verify file structure planning
+echo "Test 3: File structure planning..."
 
-output=$(run_claude "What is Step 4 of writing-plans? What is planned in this step?" 60)
+output=$(run_claude "What is the file structure step of writing-plans? What is planned in this step?" 60)
 
 if assert_contains "$output" "file\|文件\|structure\|结构\|规划" "Mentions file structure planning"; then
     passed=$((passed + 1))
@@ -64,8 +51,8 @@ fi
 
 echo ""
 
-# Test 5: Verify plan document reviewer
-echo "Test 5: Plan document reviewer..."
+# Test 4: Verify plan document reviewer
+echo "Test 4: Plan document reviewer..."
 
 output=$(run_claude "Does writing-plans use a reviewer to check the plan? What is checked?" 60)
 
@@ -77,10 +64,10 @@ fi
 
 echo ""
 
-# Test 6: Verify execution mode selection
-echo "Test 6: Execution mode selection..."
+# Test 5: Verify execution mode selection
+echo "Test 5: Execution mode selection..."
 
-output=$(run_claude "In the final step of writing-plans (Step 9), how is the execution mode chosen? What are the options?" 60)
+output=$(run_claude "In the final step of writing-plans, how is the execution mode chosen? What are the options?" 60)
 
 if assert_contains "$output" "subagent\|team-driven\|executing-plans\|子代理\|团队" "Mentions execution modes"; then
     passed=$((passed + 1))
@@ -90,8 +77,8 @@ fi
 
 echo ""
 
-# Test 7: Verify TDD in tasks
-echo "Test 7: TDD requirement in tasks..."
+# Test 6: Verify TDD in tasks
+echo "Test 6: TDD requirement in tasks..."
 
 output=$(run_claude "Do the tasks in writing-plans follow TDD? What are the standard steps for each task?" 60)
 

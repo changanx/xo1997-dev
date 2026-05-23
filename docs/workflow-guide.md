@@ -84,15 +84,6 @@ xo1997-dev 是一套完整的软件工程实践工作流，核心理念：
             │ 设计批准
             ▼
 ┌───────────────────────┐
-│  using-git-worktrees  │ ← 创建隔离工作空间
-│  (Git Worktree 管理)   │
-│  • 创建隔离分支        │
-│  • 运行项目设置        │
-│  • 验证测试基线        │
-└───────────┬───────────┘
-            │
-            ▼
-┌───────────────────────┐
 │  writing-plans        │
 │  (编写实现计划)        │
 │                        │
@@ -219,7 +210,6 @@ xo1997-dev 是一套完整的软件工程实践工作流，核心理念：
 │  3. 保持现状          │
 │  4. 放弃工作          │
 │                        │
-│  清理 Worktree        │
 └───────────────────────┘
 ```
 
@@ -506,7 +496,7 @@ docs/specs/feature_{模块}_{功能}_{日期}/
 |------|-----|
 | **触发条件** | 有已批准的设计文档，需要编写实现计划 |
 | **调用时机** | brainstorming 完成后 |
-| **前置技能** | brainstorming, using-git-worktrees |
+| **前置技能** | brainstorming |
 
 **任务结构:**
 ```markdown
@@ -738,22 +728,8 @@ Phase 4: 测试报告
 |------|------|
 | 1. 本地合并 | 切换到基础分支 → 合并 → 删除特性分支 |
 | 2. 创建 PR | 推送 → 使用 gh 创建 PR |
-| 3. 保持现状 | 保留分支和 Worktree |
-| 4. 放弃工作 | 确认后删除分支和 Worktree |
-
----
-
-#### using-git-worktrees - Git Worktree 管理
-
-| 属性 | 值 |
-|------|-----|
-| **触发条件** | 开始需要隔离的功能工作、执行实现计划前 |
-| **调用时机** | 设计批准后、实现开始前 |
-
-**作用：**
-1. 创建隔离的工作空间
-2. 自动运行项目设置
-3. 验证干净的测试基线
+| 3. 保持现状 | 保留特性分支 |
+| 4. 放弃工作 | 确认后删除特性分支 |
 
 ---
 
@@ -1020,7 +996,7 @@ src/
 
 ```
 1. /brainstorm          → 探索需求，设计数据库表结构
-2. 批准设计             → 自动创建 Worktree
+2. 批准设计             →
 3. /write-plan          → 编写详细实现计划
 4. 批准计划             →
 5. 自动选择执行模式     →
@@ -1109,7 +1085,6 @@ xo1997-dev/
 │   ├── requesting-code-review/
 │   ├── receiving-code-review/
 │   ├── finishing-a-development-branch/
-│   ├── using-git-worktrees/
 │   ├── committing-changes/        # 提交代码变更
 │   ├── for-test/                  # 测试人员工作流
 │   └── dispatching-parallel-agents/
@@ -1135,7 +1110,6 @@ xo1997-dev 提供了一套完整的软件工程实践工作流：
 | **证据驱动** | verification-before-completion 的铁律 |
 | **代码质量** | 双阶段审查（规范 + 质量）|
 | **提交规范** | committing-changes 的 Conventional Commits 格式 |
-| **隔离开发** | using-git-worktrees 的隔离工作空间 |
 | **前后端协同** | team-driven-development 的多代理协调 |
 | **测试左移** | for-test 技能支持测试人员全程参与 |
 | **文档规范** | 需求文档、设计文档、测试用例、模块文档模板 |

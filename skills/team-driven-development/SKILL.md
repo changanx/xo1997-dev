@@ -80,21 +80,15 @@ Agents communicate through shared files:
 
 ## Process Flow
 
-### Step 0: Verify Isolated Workspace
+### Step 0: Verify Workspace
 
-**Before starting execution, verify you are in a worktree:**
+**Before starting execution, verify the current branch is not main/master:**
 
 ```bash
-git worktree list
+git branch --show-current
 ```
 
-Check if the current working directory appears in the worktree list.
-
-**If NOT in a worktree:**
-- This skill should only be called after brainstorming, which creates the worktree
-- Ask the user: "No isolated workspace detected. Should I create one, or should we start with brainstorming first?"
-
-**If already in a worktree:** Proceed to Step 1.
+If on main/master, create a feature branch first. Otherwise proceed to Step 1.
 
 ```
 Phase 1: Plan Distribution
@@ -237,7 +231,7 @@ After both endpoints complete:
 
 1. Call `xo1997-dev:finishing-a-development-branch` skill
 2. Handle branch merge or PR creation
-3. Clean up worktree
+3. Clean up feature branch
 
 ## Communication Rules
 
@@ -313,7 +307,7 @@ When team-coordinator cannot auto-resolve, escalate to human:
 
 ## Required Skills
 
-- `xo1997-dev:brainstorming` - Creates the worktree and design document (should be called before this skill)
+- `xo1997-dev:brainstorming` - Creates the design document (should be called before this skill)
 - `xo1997-dev:writing-plans` - Creates the plan this skill executes
 - `xo1997-dev:test-driven-development` - Agents follow TDD
 - `xo1997-dev:requesting-code-review` - Review process

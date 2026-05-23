@@ -65,6 +65,5 @@ After all tasks complete and verified:
 ## Integration
 
 **Required workflow skills:**
-- **xo1997-dev:using-git-worktrees** - REQUIRED: Set up isolated workspace before starting
 - **xo1997-dev:writing-plans** - Creates the plan this skill executes
 - **xo1997-dev:finishing-a-development-branch** - Complete development after all tasks

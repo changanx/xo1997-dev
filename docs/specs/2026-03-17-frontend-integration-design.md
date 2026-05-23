@@ -46,7 +46,6 @@ xo1997-dev/
 │   ├── test-driven-development/     # TDD（前后端共用）
 │   ├── systematic-debugging/        # 调试（前后端共用）
 │   ├── verification-before-completion/
-│   ├── using-git-worktrees/
 │   ├── requesting-code-review/
 │   └── ...
 │

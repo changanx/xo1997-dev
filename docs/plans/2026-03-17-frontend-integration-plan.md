@@ -2016,7 +2016,7 @@ mybatis-plus-patterns/  springboot-best-practices/  springboot-unified-response/
 === Core Skills ===
 brainstorming/  executing-plans/  finishing-a-development-branch/
 subagent-driven-development/  systematic-debugging/  team-driven-development/
-test-driven-development/  using-git-worktrees/  using-xo1997-dev/
+test-driven-development/  using-xo1997-dev/
 verification-before-completion/  writing-plans/  writing-skills/
 ...
 ```

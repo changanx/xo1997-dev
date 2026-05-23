@@ -16,18 +16,6 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 **Save plans to:** `docs/specs/feature_{模块}_{功能}_{日期}/plan.md`
 - (User preferences for plan location override this default)
 
-## Worktree Setup
-
-**REQUIRED:** Before writing the plan, ensure you are working in an isolated workspace.
-
-1. Check if already in a worktree: `git worktree list`
-2. If NOT in a worktree:
-   - **REQUIRED SUB-SKILL:** Use `xo1997-dev:using-git-worktrees` to create an isolated workspace
-   - Wait for worktree setup to complete before proceeding
-3. If already in a worktree: proceed with plan creation
-
-**Why this matters:** Plans should be written in isolation to prevent accidental commits to main/master branch.
-
 ## Document Verification Gate
 
 <VERIFICATION-GATE>

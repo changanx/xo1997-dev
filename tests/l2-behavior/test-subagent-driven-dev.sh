@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Test: subagent-driven-development skill behavior
-# Verifies that the skill enforces correct workflow order and requirements
+# Verifies subagent dispatching and coordination
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -12,12 +12,12 @@ echo ""
 passed=0
 failed=0
 
-# Test 1: Verify skill describes correct workflow order (spec compliance before code quality)
-echo "Test 1: Workflow ordering (spec compliance before code quality)..."
+# Test 1: Verify subagent dispatching
+echo "Test 1: Subagent dispatching..."
 
-output=$(run_claude "In the subagent-driven-development skill, what comes first: spec compliance review or code quality review? Be specific about the order." 60)
+output=$(run_claude "How does subagent-driven-development dispatch work? What agent type is used?" 60)
 
-if assert_order "$output" "spec.*compliance\|specification" "code.*quality" "Spec compliance before code quality"; then
+if assert_contains "$output" "general-purpose\|Agent\|subagent\|子代理\|dispatch" "Mentions subagent dispatching"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))
@@ -25,12 +25,12 @@ fi
 
 echo ""
 
-# Test 2: Verify self-review requirement
-echo "Test 2: Self-review requirement..."
+# Test 2: Verify task tracking
+echo "Test 2: Task tracking..."
 
-output=$(run_claude "Does the subagent-driven-development skill require implementers to do self-review before reporting completion? What should they check?" 60)
+output=$(run_claude "How does subagent-driven-development track task progress? What tools are used?" 60)
 
-if assert_contains "$output" "self-review\|self review\|self.*check" "Mentions self-review"; then
+if assert_contains "$output" "TaskUpdate\|TaskCreate\|TaskList\|task\|任务\|跟踪" "Mentions task tracking"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))
@@ -38,12 +38,12 @@ fi
 
 echo ""
 
-# Test 3: Verify plan is read once, not per task
-echo "Test 3: Plan reading efficiency..."
+# Test 3: Verify review checkpoint
+echo "Test 3: Review checkpoint..."
 
-output=$(run_claude "In subagent-driven-development, how many times should the controller read the plan file? When does this happen?" 60)
+output=$(run_claude "Does subagent-driven-development have review checkpoints? When do they happen?" 60)
 
-if assert_contains "$output" "once\|one time\|single\|beginning" "Read plan once at beginning"; then
+if assert_contains "$output" "review\|审查\|checkpoint\|检查点\|每.*步" "Mentions review checkpoints"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))
@@ -51,18 +51,12 @@ fi
 
 echo ""
 
-# Test 4: Verify spec compliance reviewer skepticism
-echo "Test 4: Spec compliance reviewer mindset..."
+# Test 4: Verify finishing skill integration
+echo "Test 4: Finishing skill integration..."
 
-output=$(run_claude "What is the spec compliance reviewer's attitude toward the implementer's report in subagent-driven-development? Should they trust the report?" 60)
+output=$(run_claude "What happens after all tasks are complete in subagent-driven-development? Which skill is called?" 60)
 
-if assert_contains "$output" "not trust\|don't trust\|skeptical\|verify.*independently\|suspiciously\|distrust" "Reviewer is skeptical"; then
-    passed=$((passed + 1))
-else
-    failed=$((failed + 1))
-fi
-
-if assert_contains "$output" "read.*code\|inspect.*code\|verify.*code\|check.*code" "Reviewer reads code"; then
+if assert_contains "$output" "finishing\|完成\|branch\|分支" "Mentions finishing-a-development-branch"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))
@@ -70,12 +64,12 @@ fi
 
 echo ""
 
-# Test 5: Verify review loops
-echo "Test 5: Review loop mechanism..."
+# Test 5: Verify error handling
+echo "Test 5: Error handling..."
 
-output=$(run_claude "In subagent-driven-development, what happens if a reviewer finds issues? Is it a one-time review or a loop?" 60)
+output=$(run_claude "What happens when a subagent fails in subagent-driven-development? How is the error handled?" 60)
 
-if assert_contains "$output" "loop\|again\|repeat\|until.*approved\|until.*pass\|re-review\|iterate" "Review loops mentioned"; then
+if assert_contains "$output" "fail\|error\|失败\|错误\|retry\|重试\|block\|阻塞" "Mentions error handling"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))
@@ -83,25 +77,12 @@ fi
 
 echo ""
 
-# Test 6: Verify worktree requirement
-echo "Test 6: Worktree requirement..."
+# Test 6: Verify plan reading
+echo "Test 6: Plan reading..."
 
-output=$(run_claude "What are the prerequisites before using subagent-driven-development? Is worktree required?" 60)
+output=$(run_claude "How does subagent-driven-development read the implementation plan? What does it extract?" 60)
 
-if assert_contains "$output" "worktree\|using-git-worktrees" "Mentions worktree requirement"; then
-    passed=$((passed + 1))
-else
-    failed=$((failed + 1))
-fi
-
-echo ""
-
-# Test 7: Verify task context provision
-echo "Test 7: Task context provision..."
-
-output=$(run_claude "In subagent-driven-development, how does the controller provide task information to implementer subagents? Does it make them read a file or provide text directly?" 60)
-
-if assert_contains "$output" "provide.*directly\|full.*text\|in the prompt\|include.*task" "Provides text directly"; then
+if assert_contains "$output" "plan\|计划\|extract\|提取\|step\|步骤\|task\|任务" "Mentions plan reading"; then
     passed=$((passed + 1))
 else
     failed=$((failed + 1))

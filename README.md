@@ -21,7 +21,6 @@ xo1997-dev 是一套完整的软件开发工作流，专为 **Spring Boot + Vue3
                                                 ▼
                                         writing-plans (实现计划)
                                         │
-                                        ├─ 创建 worktree (隔离工作空间)
                                         ├─ 编写实现计划
                                         └─ 自动选择执行模式
                                                 │
@@ -90,7 +89,7 @@ xo1997-dev 是一套完整的软件开发工作流，专为 **Spring Boot + Vue3
 **触发：** 设计批准后
 
 **流程：**
-1. 创建 worktree 隔离工作空间
+1. 编写实现计划
 2. 编写实现计划
 3. 自动选择执行模式
 
@@ -224,7 +223,6 @@ REFACTOR: 重构 → 提交
 |------|------|
 | **requesting-code-review** | 请求代码审查 |
 | **receiving-code-review** | 接收审查反馈 |
-| **using-git-worktrees** | Git Worktree 管理 |
 | **finishing-a-development-branch** | 完成开发分支 |
 | **committing-changes** | 提交代码变更 (Conventional Commits) |
 | **dispatching-parallel-agents** | 并行代理调度 |
